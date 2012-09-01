@@ -30,60 +30,62 @@
 
         function ensure(description, fn) {
             var reportDiv = document.createElement('div');
-            reportDiv.textContent = description;
+            var text = description;
             try {
                 fn();
                 reportDiv.className = 'success';
             } catch (err) {
                 reportDiv.className = 'fail';
+                text += (' (' + err.message + ')')
             } finally {
+                reportDiv.textContent = text;
                 document.body.appendChild(reportDiv);
             }
         }
 
-        function assert(val) {
-            if (!val) throw new Error()
+        function assertEqual(val1, val2) {
+            if (val1 !== val2) throw new Error('' + val1 + ' !== ' + val2)
         }
         function QSA(query) {
             return document.querySelectorAll(query);
         }
 
         ensure('h1 query works', function() {
-            assert($dom('h1').length === 1);
-            assert($dom('h1')[0].constructor.name === 'HTMLHeadingElement');
+            assertEqual($dom('h1').length, 1);
+            assertEqual($dom('h1')[0].constructor.name, 'HTMLHeadingElement');
         });
         ensure('failed query works', function() {
-            assert($dom('h2').length === 0);
+            assertEqual($dom('h2').length, 0);
         });
         ensure('each method works', function() {
             var count = 0;
             $dom('#listTest > li').each(function(el, idx) { count++; });
-            assert(count === 4);
+            assertEqual(count, 4);
         });
         ensure('map method works', function() {
             var result = $dom('#listTest > li').map(function(el) { return el.innerHTML; });
-            assert(result.length === 4);
+            assertEqual(result.length, 4);
             result.forEach(function(item, idx) {
-                assert(item === String(idx + 1));
+                assertEqual(item, String(idx + 1));
             })
         });
         ensure('filter method works', function() {
             var result = $dom('#listTest > li').filter(function(el) { return el.className === 'last'; });
-            assert(result.length === 1);
-            assert(result[0].innerHTML === '4');
+            assertEqual(result.length, 1);
+            assertEqual(result[0].innerHTML, '4');
         });
         ensure('html() works on single elements', function() {
-            assert($dom('#htmlTest').html() === 'foo');
+            assertEqual($dom('#htmlTest').html(), 'foo');
             $dom('#htmlTest').html('bar');
-            assert(QSA('#htmlTest')[0].innerHTML === 'bar');
+            assertEqual(QSA('#htmlTest')[0].innerHTML, 'bar');
         });
         ensure('html() works on multiple elements', function() {
-            assert($dom('#listTest > li').html() === '1');
+            assertEqual($dom('#listTest > li').html(), '1');
             $dom('#listTest > li').html('bar');
-            assert(QSA('#listTest > li')[0].innerHTML === 'bar');
-            assert(QSA('#listTest > li')[1].innerHTML === 'bar');
-            assert(QSA('#listTest > li')[2].innerHTML === 'bar');
-            assert(QSA('#listTest > li')[3].innerHTML === 'bar');
+            assertEqual(QSA('#listTest > li')[0].innerHTML, 'bar');
+            assertEqual(QSA('#listTest > li')[1].innerHTML, 'bar');
+            assertEqual(QSA('#listTest > li')[2].innerHTML, 'bar');
+            assertEqual(QSA('#listTest > li')[3].innerHTML, 'bar');
         });
     </script>
 </body>
