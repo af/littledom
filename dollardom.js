@@ -1,3 +1,4 @@
+// TODO: rename project (see https://github.com/julienw/dollardom)
 // TODO: Add support for:
 // .on(), .off(), .one()
 // .attr(), .removeAttr()
@@ -49,6 +50,19 @@
         splice: function() {
             var args = arrayProto.slice.call(arguments);
             return arrayProto.splice.apply(this.results, args);
+        },
+
+        // jQuery.html() work-alike
+        html: function(markup) {
+            if (markup) {
+                // Set the innerHTML for all matched elements:
+                this.each(function(el) { el.innerHTML = String(markup); })
+                return this;
+            } else {
+                // Return the innerHTML for the first matched element
+                if (!this.results.length) return null;
+                return this.results[0].innerHTML;
+            }
         },
 
         // Expose ES5 array methods on query results:

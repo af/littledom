@@ -20,6 +20,7 @@
             <li>2</li>
             <li>3</li>
             <li class="last">4</li>
+            <div id="htmlTest">foo</div>
         </ol>
     </div>
 
@@ -42,6 +43,9 @@
 
         function assert(val) {
             if (!val) throw new Error()
+        }
+        function QSA(query) {
+            return document.querySelectorAll(query);
         }
 
         ensure('h1 query works', function() {
@@ -67,6 +71,19 @@
             var result = $dom('#listTest > li').filter(function(el) { return el.className === 'last'; });
             assert(result.length === 1);
             assert(result[0].innerHTML === '4');
+        });
+        ensure('html() works on single elements', function() {
+            assert($dom('#htmlTest').html() === 'foo');
+            $dom('#htmlTest').html('bar');
+            assert(QSA('#htmlTest')[0].innerHTML === 'bar');
+        });
+        ensure('html() works on multiple elements', function() {
+            assert($dom('#listTest > li').html() === '1');
+            $dom('#listTest > li').html('bar');
+            assert(QSA('#listTest > li')[0].innerHTML === 'bar');
+            assert(QSA('#listTest > li')[1].innerHTML === 'bar');
+            assert(QSA('#listTest > li')[2].innerHTML === 'bar');
+            assert(QSA('#listTest > li')[3].innerHTML === 'bar');
         });
     </script>
 </body>
