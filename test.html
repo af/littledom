@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>$dom tests</title>
+    <style>
+        .success { color: green; }
+        .success:before { content: 'PASS: ' }
+
+        .fail { color: red; }
+        .fail:before { content: 'FAIL: ' }
+    </style>
+</head>
+<body>
+    <h1>$dom tests</h1>
+
+    <script src="dollardom.js"></script>
+    <script>
+        console.log('starting tests');
+
+        function ensure(description, fn) {
+            var reportDiv = document.createElement('div');
+            reportDiv.textContent = description;
+            try {
+                fn();
+                reportDiv.className = 'success';
+            } catch (err) {
+                reportDiv.className = 'fail';
+            } finally {
+                document.body.appendChild(reportDiv);
+            }
+        }
+
+        function assert(val) {
+            if (!val) throw new Error()
+        }
+
+        ensure('h1 query works', function() {
+            assert($dom('h1').length === 1);
+            assert($dom('h1')[0].constructor.name === 'HTMLHeadingElement');
+        });
+        ensure('failed query works', function() {
+            assert($dom('h2').length === 0);
+        });
+    </script>
+</body>
+</html>
