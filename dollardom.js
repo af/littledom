@@ -1,7 +1,5 @@
 // TODO: Add support for:
 // .on(), .off(), .one()
-// .each()
-// .map()
 // .attr(), .removeAttr()
 // .find()
 (function(window) {
@@ -36,8 +34,8 @@
             }
 
             var results = this.qsa(query);
-            this.results = results;
-            makeArrayLike(this, arrayProto.slice.call(results));
+            this.results = arrayProto.slice.call(results);
+            makeArrayLike(this, this.results);
             return this;
         },
 
@@ -46,10 +44,18 @@
             return document.querySelectorAll(query);
         },
 
+        // Needed for browser dev tools to treat $dom results as arrays.
+        // See http://stackoverflow.com/questions/7261670/
         splice: function() {
-            var args = arrayProto.slice.call(null, arguments);
+            var args = arrayProto.slice.call(arguments);
             return arrayProto.splice.apply(this.results, args);
-        }
+        },
+
+        // Expose ES5 array methods on query results:
+        each: function(fn) { this.results.forEach(fn); },
+        forEach: function(fn) { this.results.forEach(fn); },
+        map: function(fn) { return this.results.map(fn); },
+        filter: function(fn) { return this.results.filter(fn); }
     }
 
     // Ripped off from jQuery, replace later:

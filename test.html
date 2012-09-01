@@ -9,10 +9,19 @@
 
         .fail { color: red; }
         .fail:before { content: 'FAIL: ' }
+        #testElements { display: none; }
     </style>
 </head>
 <body>
     <h1>$dom tests</h1>
+    <div id="testElements">
+        <ol id="listTest">
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li class="last">4</li>
+        </ol>
+    </div>
 
     <script src="dollardom.js"></script>
     <script>
@@ -41,6 +50,23 @@
         });
         ensure('failed query works', function() {
             assert($dom('h2').length === 0);
+        });
+        ensure('each method works', function() {
+            var count = 0;
+            $dom('#listTest > li').each(function(el, idx) { count++; });
+            assert(count === 4);
+        });
+        ensure('map method works', function() {
+            var result = $dom('#listTest > li').map(function(el) { return el.innerHTML; });
+            assert(result.length === 4);
+            result.forEach(function(item, idx) {
+                assert(item === String(idx + 1));
+            })
+        });
+        ensure('filter method works', function() {
+            var result = $dom('#listTest > li').filter(function(el) { return el.className === 'last'; });
+            assert(result.length === 1);
+            assert(result[0].innerHTML === '4');
         });
     </script>
 </body>
