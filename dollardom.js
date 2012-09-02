@@ -65,6 +65,29 @@
             }
         },
 
+        // jQuery.css() clone. Possible call signatures:
+        // attr, value: sets each element's el.style[attr] to value
+        // attr: returns the value of the first element's el.style[attr]
+        // map: sets each element's el.style for each attr, value pair in the map
+        css: function(attr, value) {
+            var isMap = (typeof attr === 'object');
+            if (isMap) {
+                var cssString = '';
+                for (var k in attr) {
+                    if (attr.hasOwnProperty(k)) cssString += (k + ':' + attr[k] + ';');
+                }
+                this.each(function(el) {
+                    el.style.cssText += cssString;
+                });
+            } else if (attr && value) {
+                this.each(function(el) {
+                    el.style[attr] = value;
+                });
+            } else if (attr) {
+                return this.results[0].style[attr];     // FIXME: make more robust
+            }
+        },
+
         // Expose ES5 array methods on query results:
         each: function(fn) { this.results.forEach(fn); },
         forEach: function(fn) { this.results.forEach(fn); },

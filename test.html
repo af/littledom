@@ -16,7 +16,7 @@
     <h1>$dom tests</h1>
     <div id="testElements">
         <ol id="listTest">
-            <li>1</li>
+            <li style="color: red;">1</li>
             <li>2</li>
             <li>3</li>
             <li class="last">4</li>
@@ -57,6 +57,7 @@
         ensure('failed query works', function() {
             assertEqual($dom('h2').length, 0);
         });
+
         ensure('each method works', function() {
             var count = 0;
             $dom('#listTest > li').each(function(el, idx) { count++; });
@@ -74,6 +75,7 @@
             assertEqual(result.length, 1);
             assertEqual(result[0].innerHTML, '4');
         });
+
         ensure('html() works on single elements', function() {
             assertEqual($dom('#htmlTest').html(), 'foo');
             $dom('#htmlTest').html('bar');
@@ -86,6 +88,16 @@
             assertEqual(QSA('#listTest > li')[1].innerHTML, 'bar');
             assertEqual(QSA('#listTest > li')[2].innerHTML, 'bar');
             assertEqual(QSA('#listTest > li')[3].innerHTML, 'bar');
+        });
+
+        ensure('css() works', function() {
+            // Getting style props:
+            var selector = '#listTest li:first-child';
+            assertEqual($dom(selector).css('color'), 'red');
+
+            // Setting style props:
+            $dom(selector).css('color', 'blue');
+            assertEqual(QSA(selector)[0].style.color, 'blue');
         });
     </script>
 </body>
