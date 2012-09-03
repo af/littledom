@@ -1,8 +1,3 @@
-// TODO: rename project (see https://github.com/julienw/dollardom)
-// TODO: Add support for:
-// .on(), .off(), .one()
-// .attr(), .removeAttr()
-// .find()
 (function(window) {
     var document = window.document;
     var arrayProto = Array.prototype;
