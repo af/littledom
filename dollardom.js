@@ -29,13 +29,11 @@
 
             // Handle case where a DOM node was passed in:
             if (query.nodeType) {
-                this.context = this[0] = query;
-                this.length = 1;
-                return this;
+                this.results = [query];
+            } else {
+                var results = this.qsa(query);
+                this.results = arrayProto.slice.call(results);
             }
-
-            var results = this.qsa(query);
-            this.results = arrayProto.slice.call(results);
             makeArrayLike(this, this.results);
             return this;
         },
