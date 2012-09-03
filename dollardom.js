@@ -95,6 +95,10 @@
         filter: function(fn) { return this.results.filter(fn); }
     }
 
+    $dom.ready = function(fn) {
+        window.addEventListener('DOMContentLoaded', fn, false);
+    }
+
     // Ripped off from jQuery, replace later:
     $dom.fn.init.prototype = $dom.fn;
 

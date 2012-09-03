@@ -99,6 +99,9 @@
             $dom(selector).css('color', 'blue');
             assertEqual(QSA(selector)[0].style.color, 'blue');
         });
+
+        // This will do nothing if it fails...
+        $dom.ready(function() { ensure('$dom.ready() works', function() {}); });
     </script>
 </body>
 </html>
