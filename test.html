@@ -51,7 +51,7 @@
 
         ensure('h1 query works', function() {
             assertEqual($dom('h1').length, 1);
-            assertEqual($dom('h1')[0].constructor.name, 'HTMLHeadingElement');
+            assertEqual($dom('h1')[0].tagName, 'H1');
         });
         ensure('failed query works', function() {
             assertEqual($dom('h2').length, 0);
