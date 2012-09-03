@@ -22,6 +22,7 @@
             <li class="last">4</li>
             <div id="htmlTest">foo</div>
         </ol>
+        <div id="hideTest">foo</div>
     </div>
 
     <script src="dollardom.js"></script>
@@ -109,6 +110,12 @@
 
             // Shouldn't get any results if we pass in an invalid context:
             assertEqual($dom('div', 123).length, 0);
+        });
+
+        ensure('hide() and show() work', function() {
+            assertEqual($dom('#hideTest')[0].style.display, '');
+            assertEqual($dom('#hideTest').hide()[0].style.display, 'none');
+            assertEqual($dom('#hideTest').show()[0].style.display, 'inherit');
         });
 
         // This will do nothing if it fails...

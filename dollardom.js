@@ -126,6 +126,22 @@
             return this;
         },
 
+        // Hide all matched elements using display: none
+        hide: function() {
+            this.each(function(el) { el.style.display = 'none'; });
+            return this;
+        },
+
+        // Show all matched elements.
+        // Since display is a "non-inherited" property [1], the browser should
+        // automatically choose whether the element(s) are displayed as
+        // block/inline/etc when we set display to 'inherit'.
+        // [1] https://developer.mozilla.org/en-US/docs/CSS/inheritance
+        show: function() {
+            this.each(function(el) { el.style.display = 'inherit'; });
+            return this;
+        },
+
         // Expose ES5 array methods on query results:
         // TODO: consider rewriting each() with a for loop for speed.
         each: function(fn) { this.results.forEach(fn); },
