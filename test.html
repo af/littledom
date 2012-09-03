@@ -118,6 +118,12 @@
             assertEqual($dom('#hideTest').show()[0].style.display, 'inherit');
         });
 
+        ensure('attr() and removeAttr() work', function() {
+            assertEqual($dom('#hideTest').attr('id'), 'hideTest');
+            assertEqual($dom('#hideTest').attr('id', 'foo')[0].id, 'foo');
+            assertEqual($dom('#foo').removeAttr('id')[0].id, '');
+        });
+
         // This will do nothing if it fails...
         $dom.ready(function() { ensure('$dom.ready() works', function() {}); });
     </script>

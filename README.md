@@ -16,7 +16,6 @@ API
 $dom.ready() - equivalent to $(document).ready()
 
 html()
-css()
 each()
 map()
 filter()
@@ -25,9 +24,14 @@ addClass()
 removeClass()
 hasClass()
 
+css()
+show()
+hide()
+attr()
+removeAttr()
+
 TODO: Add support for:
 .on(), .off(), .one(), .trigger()
-.attr(), .removeAttr()
 .find()
 .closest(), .parent(), .children()
 .toggleClass()

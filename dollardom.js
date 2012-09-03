@@ -142,10 +142,26 @@
             return this;
         },
 
+        // Get/Set attributes for all matched elements.
+        attr: function(attrName, attrValue) {
+            if (!attrName) return this;
+            if (!attrValue) return this.results[0] ? this.results[0][attrName] : undefined;
+            return this.each(function(el) {
+                el[attrName] = attrValue;
+            });
+        },
+
+        // Naive attribute removal.
+        removeAttr: function(attrName) {
+            return this.each(function(el) {
+                el.removeAttribute(attrName);
+            });
+        },
+
         // Expose ES5 array methods on query results:
         // TODO: consider rewriting each() with a for loop for speed.
-        each: function(fn) { this.results.forEach(fn); },
-        forEach: function(fn) { this.results.forEach(fn); },
+        each: function(fn) { this.results.forEach(fn); return this; },
+        forEach: function(fn) { this.results.forEach(fn); return this; },
         map: function(fn) { return this.results.map(fn); },
         filter: function(fn) { return this.results.filter(fn); }
     }
