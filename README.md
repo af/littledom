@@ -7,7 +7,7 @@ support (IE < 9) is not required.
 
 Depends on
 ----------
-* document.querySelectorAll() for all DOM searches
+* document.querySelectorAll() (used for all DOM searches)
 * DOMContentLoaded
 * ECMAScript 5 Array methods (map, filter, forEach, etc)
 
@@ -21,11 +21,16 @@ each()
 map()
 filter()
 
+addClass()
+removeClass()
+hasClass()
+
 TODO: Add support for:
-.on(), .off(), .one()
+.on(), .off(), .one(), .trigger()
 .attr(), .removeAttr()
 .find()
-.addClass, removeClass, toggleClass, hasClass
+.closest(), .parent(), .children()
+.toggleClass()
 context argument
 
 TODO: rename project (see https://github.com/julienw/dollardom)

@@ -84,7 +84,44 @@
             }
         },
 
+        // Add class(es) to all matched elements.
+        // classNames can be a space-separated list of classes, eg. 'foo bar baz'
+        addClass: function(classNames) {
+            var classes = (classNames || '').split(' ');
+            for (var i=0, l=classes.length; i<l; i++) {
+                var cls = classes[i];
+                var regex = new RegExp('\\b' + cls + '\\b');
+                for (var j=0; j<this.length; j++) {
+                    var el = this.results[j];
+                    if (!el.className.match(regex)) el.className += (' ' + cls);
+                }
+            }
+            return this;
+        },
+
+        // Return true if any matched element has the given class.
+        hasClass: function(className) {
+            var regex = new RegExp('\\b' + className + '\\b');
+            for (var i=0; i<this.length; i++) {
+                if (regex.test(this.results[i].className)) return true;
+            }
+            return false;
+        },
+
+        // Remove class(es) from all matched elements.
+        // classNames can be a space-separated list of classes, eg. 'foo bar baz'
+        removeClass: function(classNames) {
+            var classes = (classNames || '').split(' ');
+            var regex = new RegExp('\\b' + classes.join('|') + '\\b', 'g');
+            for (var i=0; i<this.length; i++) {
+                var el = this.results[i];
+                el.className = el.className.replace(regex, '');
+            }
+            return this;
+        },
+
         // Expose ES5 array methods on query results:
+        // TODO: consider rewriting each() with a for loop for speed.
         each: function(fn) { this.results.forEach(fn); },
         forEach: function(fn) { this.results.forEach(fn); },
         map: function(fn) { return this.results.map(fn); },
