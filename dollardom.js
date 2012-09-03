@@ -81,8 +81,11 @@
                 this.each(function(el) {
                     el.style[attr] = value;
                 });
-            } else if (attr) {
-                return this.results[0].style[attr];     // FIXME: make more robust
+            } else if (attr && this.results[0]) {
+                // Return the style on the dom node if one is available,
+                // otherwise use window.getComputedStyle:
+                return this.results[0].style[attr] ||
+                       window.getComputedStyle(this.results[0])[attr];
             }
         },
 
