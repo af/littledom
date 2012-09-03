@@ -10,17 +10,23 @@
         }
     }
 
-    var $dom = function(query) {
-        return new $dom.fn.init(query);
+    var $dom = function(query, context) {
+        return new $dom.fn.init(query, context);
     }
 
     $dom.fn = $dom.prototype = {
         constructor: $dom,
         length: 0,
         results: [],
+        context: document,
 
-        init: function(query) {
+        init: function(query, context) {
             if (!query) return this;
+            if (context) {
+                // Ensure that the context argument is a DOM node:
+                if (context.nodeType) this.context = context;
+                else return this;
+            }
 
             // Handle case where a DOM node was passed in:
             if (query.nodeType) {
@@ -35,7 +41,7 @@
 
         // Tiny wrapper over browser's doc.QSA
         qsa: function(query) {
-            return document.querySelectorAll(query);
+            return this.context.querySelectorAll(query);
         },
 
         // Needed for browser dev tools to treat $dom results as arrays.

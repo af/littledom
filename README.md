@@ -31,6 +31,5 @@ TODO: Add support for:
 .find()
 .closest(), .parent(), .children()
 .toggleClass()
-context argument
 
 TODO: rename project (see https://github.com/julienw/dollardom)
