@@ -158,6 +158,23 @@
             });
         },
 
+        on: function(evtName, delegateTo, callback) {
+            if (!callback) callback = delegateTo;   // If only two args were provided
+            // TODO: handle delegation
+            this.each(function(el) {
+                el.addEventListener(evtName, callback, false);
+            });
+            return this;
+        },
+
+        off: function(evtName, delegateTo, callback) {
+            if (!callback) callback = delegateTo;   // If only two args were provided
+            this.each(function(el) {
+                el.removeEventListener(evtName, callback, false);
+            });
+            return this;
+        },
+
         // Expose ES5 array methods on query results:
         // TODO: consider rewriting each() with a for loop for speed.
         each: function(fn) { this.results.forEach(fn); return this; },
@@ -165,6 +182,10 @@
         map: function(fn) { return this.results.map(fn); },
         filter: function(fn) { return this.results.filter(fn); }
     }
+
+    // Aliases:
+    $dom.fn.bind = $dom.fn.on;
+    $dom.fn.unbind = $dom.fn.off;
 
     $dom.ready = function(fn) {
         window.addEventListener('DOMContentLoaded', fn, false);
