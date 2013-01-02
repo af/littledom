@@ -1,0 +1,32 @@
+<html>
+  <head>
+    <title>Mocha</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="mocha.css" />
+  </head>
+  <body>
+    <div id="mocha"></div>
+
+    <section id="test_elements" style="display: none">
+    <h6>$dom ghetto test suite</h6>
+    <div id="testElements">
+        <ol id="listTest">
+            <li style="color: red;">1</li>
+            <li>2</li>
+            <li>3</li>
+            <li class="last">4</li>
+            <div id="htmlTest">foo</div>
+        </ol>
+        <div id="hideTest">foo</div>
+    </div>
+    </section>
+
+    <script src="mocha.js"></script>
+    <script>mocha.setup('bdd')</script>
+    <script src="../dollardom.js"></script>
+    <script src="tests.js"></script>
+    <script>
+      mocha.run();
+    </script>
+  </body>
+</html>
