@@ -28,8 +28,8 @@
                 else return this;
             }
 
-            // Handle case where a DOM node was passed in:
-            if (query.nodeType) {
+            // Handle case where window or a DOM node was passed in:
+            if (query.nodeType || query === window) {
                 this.results = [query];
             } else {
                 var results = this.qsa(query);

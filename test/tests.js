@@ -7,6 +7,24 @@ function QSA(query) {
 }
 
 describe('$dom', function() {
+    it('works when window is passed in', function() {
+        var q = $dom(window);
+        assertEqual(q.length, 1);
+        assertEqual(q[0], window);
+    });
+
+    it('works when document is passed in', function() {
+        var q = $dom(document);
+        assertEqual(q.length, 1);
+        assertEqual(q[0], document);
+    });
+
+    it('works when an element from the dom is passed in', function() {
+        var q = $dom(document.querySelector('div'));
+        assertEqual(q.length, 1);
+        assertEqual(q[0].tagName, 'DIV');
+    });
+
     it('h6 query works', function() {
         assertEqual($dom('h6').length, 1);
         assertEqual($dom('h6')[0].tagName, 'H6');
