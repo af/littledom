@@ -126,5 +126,49 @@ describe('$dom', function() {
             $el.trigger('foobaz');
             assertEqual(count, 2);
         });
+
+        it('bind() and unbind() work like their jQuery equivalents for the simple case', function() {
+            count = 0;
+            $el.bind('click', handler);
+            assertEqual(count, 0);
+            $el.trigger('click');
+            assertEqual(count, 1);
+            $el.trigger('click');
+            assertEqual(count, 2);
+            $el.trigger('keyup');
+            assertEqual(count, 2);
+
+            // Remove the handler:
+            $el.unbind('click', handler);
+            $el.trigger('click');
+            assertEqual(count, 2);
+
+            // ...and re-apply it:
+            $el.bind('click', handler);
+            $el.trigger('click');
+            assertEqual(count, 3);
+        });
+
+        it('multiple handlers work as expected', function() {
+            var handler2 = function() { count += 10; };
+            count = 0;
+
+            $el.on('click', handler);
+            $el.on('click', handler2);
+            $el.trigger('click');
+            assertEqual(count, 11);
+            $el.trigger('click');
+            assertEqual(count, 22);
+
+            // Remove the first handler and only the second one is invoked:
+            $el.off('click', handler);
+            $el.trigger('click');
+            assertEqual(count, 32);
+
+            // ...and re-apply it:
+            $el.on('click', handler);
+            $el.trigger('click');
+            assertEqual(count, 43);
+        });
     });
 });

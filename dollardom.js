@@ -177,6 +177,9 @@
             return this;
         },
 
+        bind: function(evtName, callback) { return this.on(evtName, null, callback); },
+        unbind: function(evtName, callback) { return this.off(evtName, null, callback); },
+
         // Trigger an event on the matching elements.
         // This is usually just used to manually invoke click handlers, etc, and for the simple
         // case a very basic dummy event object will be passed to the handler(s).
@@ -199,10 +202,6 @@
         map: function(fn) { return this.results.map(fn); },
         filter: function(fn) { return this.results.filter(fn); }
     }
-
-    // Aliases:
-    $dom.fn.bind = $dom.fn.on;
-    $dom.fn.unbind = $dom.fn.off;
 
     $dom.ready = function(fn) {
         window.addEventListener('DOMContentLoaded', fn, false);
