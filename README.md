@@ -38,11 +38,19 @@ API
     attr()
     removeAttr()
 
+    on()
+    off()
+    trigger()
+    bind() (legacy)
+    unbind() (legacy)
+
+
 TODO: Add support for:
-.on(), .off(), .one()
-.find()
-.closest(), .parent(), .children()
-.toggleClass()
-$dom.create(htmlstring)
+    * event delegation
+    .one()
+    .find()
+    .closest(), .parent(), .children()
+    .toggleClass()
+    $dom.create(htmlstring)
 
 TODO: rename project (see https://github.com/julienw/dollardom)

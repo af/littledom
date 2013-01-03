@@ -88,7 +88,15 @@ describe('$dom', function() {
     describe('events', function() {
         var count = 0;
         var handler = function(evt) { count++; };
+        var handler2 = function() { count += 10; };
         var $el = $dom('h6');
+
+        afterEach(function() {
+            count = 0;
+            $el.off('click', handler);
+            $el.off('click', handler2);
+            $el.off('foobaz', handler);
+        });
 
         it('on(), off(), and trigger() work for simulated click events', function() {
             $el.on('click', handler);
@@ -112,7 +120,6 @@ describe('$dom', function() {
         });
 
         it('on(), off(), and trigger() work with custom event names', function() {
-            count = 0;
             $el.on('foobaz', handler);
             assertEqual(count, 0);
             $el.trigger('foobaz');
@@ -128,7 +135,6 @@ describe('$dom', function() {
         });
 
         it('bind() and unbind() work like their jQuery equivalents for the simple case', function() {
-            count = 0;
             $el.bind('click', handler);
             assertEqual(count, 0);
             $el.trigger('click');
@@ -150,9 +156,6 @@ describe('$dom', function() {
         });
 
         it('multiple handlers work as expected', function() {
-            var handler2 = function() { count += 10; };
-            count = 0;
-
             $el.on('click', handler);
             $el.on('click', handler2);
             $el.trigger('click');

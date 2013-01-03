@@ -160,25 +160,32 @@
 
 
         // Events
-        on: function(evtName, delegateTo, callback) {
-            if (!callback) callback = delegateTo;   // If only two args were provided
+
+        // Workhorse method for event binding.
+        // $dom does not provide click(), mouseover(), etc so you should use on() for
+        // pretty much all event binding.
+        on: function(evtName, delegateTo, handler) {
+            if (!handler) handler = delegateTo;   // If only two args were provided
             // TODO: handle delegation
             this.each(function(el) {
-                el.addEventListener(evtName, callback, false);
+                el.addEventListener(evtName, handler, false);
             });
             return this;
         },
 
-        off: function(evtName, delegateTo, callback) {
-            if (!callback) callback = delegateTo;   // If only two args were provided
+        // Remove an event listener.
+        // Note that the handler function must be provided, ie. omitting that parameter
+        // to remove all listeners is not supported as in jQuery.
+        off: function(evtName, delegateTo, handler) {
+            if (!handler) handler = delegateTo;   // If only two args were provided
             this.each(function(el) {
-                el.removeEventListener(evtName, callback, false);
+                el.removeEventListener(evtName, handler, false);
             });
             return this;
         },
 
-        bind: function(evtName, callback) { return this.on(evtName, null, callback); },
-        unbind: function(evtName, callback) { return this.off(evtName, null, callback); },
+        bind: function(evtName, handler) { return this.on(evtName, null, handler); },
+        unbind: function(evtName, handler) { return this.off(evtName, null, handler); },
 
         // Trigger an event on the matching elements.
         // This is usually just used to manually invoke click handlers, etc, and for the simple
