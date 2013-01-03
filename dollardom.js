@@ -158,6 +158,8 @@
             });
         },
 
+
+        // Events
         on: function(evtName, delegateTo, callback) {
             if (!callback) callback = delegateTo;   // If only two args were provided
             // TODO: handle delegation
@@ -173,6 +175,21 @@
                 el.removeEventListener(evtName, callback, false);
             });
             return this;
+        },
+
+        // Trigger an event on the matching elements.
+        // This is usually just used to manually invoke click handlers, etc, and for the simple
+        // case a very basic dummy event object will be passed to the handler(s).
+        // However you can optionally pass in your own event object as a second parameter.
+        trigger: function(evtName, eventObj) {
+            if (!eventObj) {
+                // TODO: consider a more intelligent default event object (based on evtName)
+                eventObj = document.createEvent('MouseEvent');
+                eventObj.initMouseEvent(evtName, true, true, window);
+            }
+            this.each(function(el) {
+                el.dispatchEvent(eventObj);
+            });
         },
 
         // Expose ES5 array methods on query results:

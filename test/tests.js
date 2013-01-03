@@ -84,4 +84,47 @@ describe('$dom', function() {
         assertEqual($dom('#hideTest').attr('id', 'foo')[0].id, 'foo');
         assertEqual($dom('#foo').removeAttr('id')[0].id, '');
     });
+
+    describe('events', function() {
+        var count = 0;
+        var handler = function(evt) { count++; };
+        var $el = $dom('h6');
+
+        it('on(), off(), and trigger() work for simulated click events', function() {
+            $el.on('click', handler);
+            assertEqual(count, 0);
+            $el.trigger('click');
+            assertEqual(count, 1);
+            $el.trigger('click');
+            assertEqual(count, 2);
+            $el.trigger('keyup');
+            assertEqual(count, 2);
+
+            // Remove the handler:
+            $el.off('click', handler);
+            $el.trigger('click');
+            assertEqual(count, 2);
+
+            // ...and re-apply it:
+            $el.on('click', handler);
+            $el.trigger('click');
+            assertEqual(count, 3);
+        });
+
+        it('on(), off(), and trigger() work with custom event names', function() {
+            count = 0;
+            $el.on('foobaz', handler);
+            assertEqual(count, 0);
+            $el.trigger('foobaz');
+            assertEqual(count, 1);
+            $el.trigger('foobaz');
+            assertEqual(count, 2);
+            $el.trigger('keyup');
+            assertEqual(count, 2);
+
+            $el.off('foobaz', handler);
+            $el.trigger('foobaz');
+            assertEqual(count, 2);
+        });
+    });
 });
