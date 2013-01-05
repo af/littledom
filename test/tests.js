@@ -242,5 +242,11 @@ describe('$dom', function() {
         it('browserSupported works', function() {
             assertEqual($dom.browserSupported, (!!document.querySelectorAll && !!document.addEventListener));
         });
+
+        it('ready() invokes callback if DOMContentLoaded was already fired', function() {
+            var count = 0;
+            $dom.ready(function() { count++; });
+            assertEqual(count, 1);
+        });
     });
 });

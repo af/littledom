@@ -241,10 +241,11 @@
         filter: function(fn) { return this.results.filter(fn); }
     }
 
-    // Register a callback function for the DOMContentLoaded event.
+    // Register a callback function for when the document is ready to go.
     // Use this where you would use jQuery(document).ready()
     $dom.ready = function(fn) {
-        window.addEventListener('DOMContentLoaded', fn, false);
+        if (document.readyState === 'complete') fn();
+        else window.addEventListener('DOMContentLoaded', fn, false);
     }
 
     // Boolean indicating whether the current browser is supported by this library:
