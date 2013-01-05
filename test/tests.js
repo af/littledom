@@ -237,4 +237,10 @@ describe('$dom', function() {
             assertEqual(count, 2);
         });
     });
+
+    describe('utilities', function() {
+        it('browserSupported works', function() {
+            assertEqual($dom.browserSupported, (!!document.querySelectorAll && !!document.addEventListener));
+        });
+    });
 });

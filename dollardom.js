@@ -241,9 +241,16 @@
         filter: function(fn) { return this.results.filter(fn); }
     }
 
+    // Register a callback function for the DOMContentLoaded event.
+    // Use this where you would use jQuery(document).ready()
     $dom.ready = function(fn) {
         window.addEventListener('DOMContentLoaded', fn, false);
     }
+
+    // Boolean indicating whether the current browser is supported by this library:
+    // This is not an exhaustive test (this code also uses DOMContentLoaded and ES5 array methods),
+    // but should be true for all browsers in use as of this writing:
+    $dom.browserSupported = (!!document.addEventListener && !!document.querySelectorAll);
 
     // Ripped off from jQuery, replace later:
     $dom.fn.init.prototype = $dom.fn;
