@@ -209,5 +209,32 @@ describe('$dom', function() {
             $el.trigger('click');
             assertEqual(count, 43);
         });
+
+        it('event delegation works for events triggered directly on the delegate', function() {
+            $dom(document).on('click', 'h6', handler);
+
+            // Note: can't use $el for this because it's removed/reinserted for each test:
+            $dom('h6').trigger('click');
+            assertEqual(count, 1);
+
+            // Triggering on the root element doesn't actually invoke the handler:
+            $dom(document).trigger('click');
+            assertEqual(count, 1);
+        });
+
+        it('delegated handlers are invoked for events on children of delegate', function() {
+            $dom('#topDiv').on('click', '#nestedDiv', handler);
+
+            $dom('#nestedDiv').trigger('click');
+            assertEqual(count, 1);
+
+            // Delegated events should run for events triggered on children of the delegated element:
+            $dom('#innerDiv').trigger('click');
+            assertEqual(count, 2);
+
+            // Triggering on the root element doesn't actually invoke the handler:
+            $dom('#topDiv').trigger('click');
+            assertEqual(count, 2);
+        });
     });
 });

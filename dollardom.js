@@ -165,11 +165,42 @@
         // $dom does not provide click(), mouseover(), etc so you should use on() for
         // pretty much all event binding.
         on: function(evtName, delegateTo, handler) {
-            if (!handler) handler = delegateTo;   // If only two args were provided
-            // TODO: handle delegation
-            this.each(function(el) {
-                el.addEventListener(evtName, handler, false);
-            });
+            if (!handler) {
+                handler = delegateTo;   // If only two args were provided
+                delegateTo = null;
+            }
+
+            if (delegateTo) {
+                console.log('delegating to', delegateTo);
+                // If using event delegation, create a wrapped event handler:
+                var that = this;
+                var wrappedHandler = function(evt) {
+                    var candidateEls = [];
+                    console.log('in wrapper', evt.target);
+                    that.each(function(el) {
+                        var query = el.querySelectorAll(delegateTo);
+                        candidateEls = candidateEls.concat(arrayProto.slice.call(query));
+                    });
+
+                    // follow evt.target's parentNode chain looking for elements that match
+                    // the delegateTo query until we get a match or hit top of the tree:
+                    var testEl = evt.target;
+                    while (testEl) {
+                        if (candidateEls.indexOf(testEl) > -1) return handler(evt);
+                        testEl = testEl.parentNode;
+                    }
+                };
+
+                this.each(function(el) {
+                    console.log('adding handler to', el);
+                    el.addEventListener(evtName, wrappedHandler, false);
+                });
+            } else {
+                // For regular (non-delegated) event binding, just add the listener directly:
+                this.each(function(el) {
+                    el.addEventListener(evtName, handler, false);
+                });
+            }
             return this;
         },
 
