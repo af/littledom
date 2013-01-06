@@ -89,10 +89,24 @@ describe('$dom', function() {
             assertEqual(QSA('#listTest > li')[3].innerHTML, 'bar');
         });
 
-        it('attr() and removeAttr() work', function() {
+        it('attr() and removeAttr() work for setting element ids', function() {
             assertEqual($dom('#hideTest').attr('id'), 'hideTest');
             assertEqual($dom('#hideTest').attr('id', 'foo')[0].id, 'foo');
             assertEqual($dom('#foo').removeAttr('id')[0].id, '');
+        });
+
+        it('attr() accepts a single hash argument', function() {
+            var $el = $dom('#hideTest');
+            $el.attr({ id: 'hello_world' });
+            assertEqual($el[0].id, 'hello_world');
+            assertEqual($el.attr('id'), 'hello_world');
+
+            // multiple entries on the hash are all set correctly:
+            $el.attr({ id: 'test2', testAttr1: 'boo', testAttr2: 'asdf' });
+            assertEqual($el.attr('id'), 'test2');
+            assertEqual($el[0].id, 'test2');
+            assertEqual($el.attr('testAttr1'), 'boo');
+            assertEqual($el.attr('testAttr2'), 'asdf');
         });
     });
 

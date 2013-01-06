@@ -36,8 +36,10 @@ API
     css()
     show()
     hide()
-    attr()
-    removeAttr()
+    attr(<string>)           -> return the attribute of the first matched element
+    attr(<string>, <string>) -> for all matched elements, set the attribute with the given name to the given value.
+    attr(<object>)           -> for each matched element, el[attrName] = attrValue for each key, val pair in the object
+    removeAttr(<string>)
 
     on()
     off()

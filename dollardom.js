@@ -145,12 +145,27 @@
         },
 
         // Get/Set attributes for all matched elements.
+        // Acceptable call signatures:
+        // attr(<string attrName>)  -> return the attribute of the first matched element
+        // attr(<string>, <string>) -> for all matched elements, set the attribute with the
+        //                             given name to the given value.
+        // attr(<object>)           -> for each matched element, el[attrName] = attrValue
         attr: function(attrName, attrValue) {
+            var hashArg = (typeof attrName === 'object') ? attrName : undefined;
+            var singleStringArg = !attrValue && typeof attrName === 'string';
             if (!attrName) return this;
-            if (!attrValue) return this.results[0] ? this.results[0][attrName] : undefined;
-            return this.each(function(el) {
-                el[attrName] = attrValue;
-            });
+            else if (singleStringArg) return this.results[0] ? this.results[0][attrName] : undefined;
+
+            var transformFn = function(el) { el[attrName] = attrValue; };
+            if (hashArg) {
+                transformFn = function(el) {
+                    for (var k in hashArg) {
+                        if (hashArg.hasOwnProperty(k)) el[k] = hashArg[k];
+                    }
+                };
+            }
+
+            return this.each(transformFn);
         },
 
         // Naive attribute removal.
