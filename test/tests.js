@@ -220,6 +220,10 @@ describe('$dom', function() {
             // Triggering on the root element doesn't actually invoke the handler:
             $dom(document).trigger('click');
             assertEqual(count, 1);
+
+            $dom(document).off('click', 'h6', handler);
+            $dom('h6').trigger('click');
+            assertEqual(count, 1);
         });
 
         it('delegated handlers are invoked for events on children of delegate', function() {
@@ -234,6 +238,33 @@ describe('$dom', function() {
 
             // Triggering on the root element doesn't actually invoke the handler:
             $dom('#topDiv').trigger('click');
+            assertEqual(count, 2);
+
+            // After calling off(), the handler should never be called again:
+            $dom('#topDiv').off('click', '#nestedDiv', handler);
+            $dom('#innerDiv').trigger('click');
+            $dom('#nestedDiv').trigger('click');
+            assertEqual(count, 2);
+        });
+
+        it('delegate() and undelegate() aliases work', function() {
+            $dom('#topDiv').delegate('#nestedDiv', 'click', handler);
+
+            $dom('#nestedDiv').trigger('click');
+            assertEqual(count, 1);
+
+            // Delegated events should run for events triggered on children of the delegated element:
+            $dom('#innerDiv').trigger('click');
+            assertEqual(count, 2);
+
+            // Triggering on the root element doesn't actually invoke the handler:
+            $dom('#topDiv').trigger('click');
+            assertEqual(count, 2);
+
+            // After calling off(), the handler should never be called again:
+            $dom('#topDiv').undelegate('#nestedDiv', 'click', handler);
+            $dom('#innerDiv').trigger('click');
+            $dom('#nestedDiv').trigger('click');
             assertEqual(count, 2);
         });
     });

@@ -11,6 +11,7 @@ most commonly used methods.
 Depends on
 ----------
 * document.querySelectorAll() (used for all DOM searches)
+* addEventListener() and removeEventListener()
 * DOMContentLoaded
 * ECMAScript 5 Array methods (map, filter, forEach, etc)
 
@@ -46,7 +47,6 @@ API
 
 
 TODO: Add support for:
-    * event delegation
     .one()
     .find()
     .closest(), .parent(), .children()

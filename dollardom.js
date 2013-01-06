@@ -2,6 +2,8 @@
     var document = window.document;
     var arrayProto = Array.prototype;
 
+    var delegationHandlers = {};    // Used to store callbacks for event delegation (see on() and off())
+
     // Helper function to make obj look like an array (where items is an array to copy over)
     function makeArrayLike(obj, items) {
         obj.length = items.length;
@@ -171,12 +173,10 @@
             }
 
             if (delegateTo) {
-                console.log('delegating to', delegateTo);
-                // If using event delegation, create a wrapped event handler:
+                // Create a new event handler that does the actual delegation:
                 var that = this;
                 var wrappedHandler = function(evt) {
                     var candidateEls = [];
-                    console.log('in wrapper', evt.target);
                     that.each(function(el) {
                         var query = el.querySelectorAll(delegateTo);
                         candidateEls = candidateEls.concat(arrayProto.slice.call(query));
@@ -191,8 +191,10 @@
                     }
                 };
 
+                // TODO: using the handler function as a key is probably a bad approach, but it works
+                delegationHandlers[handler] = wrappedHandler;
+
                 this.each(function(el) {
-                    console.log('adding handler to', el);
                     el.addEventListener(evtName, wrappedHandler, false);
                 });
             } else {
@@ -208,13 +210,24 @@
         // Note that the handler function must be provided, ie. omitting that parameter
         // to remove all listeners is not supported as in jQuery.
         off: function(evtName, delegateTo, handler) {
-            if (!handler) handler = delegateTo;   // If only two args were provided
+            if (!handler) {
+                handler = delegateTo;   // If only two args were provided
+                delegateTo = null;
+            }
+
+            // retrieve the wrapped handler function to be passed to removeEventListener()
+            // TODO: remove the handler from delegationHandlers
+            if (delegateTo) handler = delegationHandlers[handler];
+
             this.each(function(el) {
                 el.removeEventListener(evtName, handler, false);
             });
             return this;
         },
 
+        // Aliases for legacy jquery event binding methods (still used by libs like Backbone):
+        delegate: function(delegateTo, evtName, handler) { return this.on(evtName, delegateTo, handler); },
+        undelegate: function(delegateTo, evtName, handler) { return this.off(evtName, delegateTo, handler); },
         bind: function(evtName, handler) { return this.on(evtName, null, handler); },
         unbind: function(evtName, handler) { return this.off(evtName, null, handler); },
 
