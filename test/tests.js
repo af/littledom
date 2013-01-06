@@ -48,6 +48,22 @@ describe('$dom', function() {
             // Shouldn't get any results if we pass in an invalid context:
             assertEqual($dom('div', 123).length, 0);
         });
+
+        it('find() returns the right children', function() {
+            var liQuery = $dom('#testElements').find('li');
+            assertEqual(liQuery.length, 4);
+            assertEqual(liQuery[0].tagName, 'LI');
+
+            var divQuery = $dom('section#test_elements > div').find('div');
+            assertEqual(divQuery.length, 4);
+            assertEqual(divQuery[0].tagName, 'DIV');
+            assertEqual(divQuery[4], undefined);
+
+            var idQuery = $dom('section#test_elements > div').find('#htmlTest');
+            assertEqual(idQuery.length, 1);
+            assertEqual(idQuery[0].tagName, 'DIV');
+            assertEqual(idQuery[1], undefined);
+        });
     });
 
 
@@ -107,6 +123,16 @@ describe('$dom', function() {
             assertEqual($el[0].id, 'test2');
             assertEqual($el.attr('testAttr1'), 'boo');
             assertEqual($el.attr('testAttr2'), 'asdf');
+        });
+
+        it('remove() removes elements from the DOM', function() {
+            var $els = $dom('section#test_elements div');
+            assertEqual($els.length, 6);
+            $els.remove();
+            assertEqual($els.length, 6);
+
+            var $els = $dom('section#test_elements div');
+            assertEqual($els.length, 0);
         });
     });
 
@@ -292,6 +318,11 @@ describe('$dom', function() {
             var count = 0;
             $dom.ready(function() { count++; });
             assertEqual(count, 1);
+        });
+
+        it('$dom objects pass instanceof check', function() {
+            assertEqual($dom('h6') instanceof $dom, true);
+            assertEqual($dom('doesnotexist') instanceof $dom, true);
         });
     });
 });

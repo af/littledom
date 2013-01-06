@@ -21,13 +21,16 @@ API
 ## Non-jQuery methods:
 
     $dom.ready() - equivalent to $(document).ready()
+    $dom.browserSupported - boolean indicating whether the browser is supported by the library.
 
 ## Supported jQuery API subset:
 
     html()
     each()
     map()
-    filter()
+    filter()        -> works like the ES5 array method, not jquery's version
+    find(<string>)
+    remove()
 
     addClass()
     removeClass()
@@ -44,15 +47,13 @@ API
     on()
     off()
     trigger()
-    bind() (legacy)
-    unbind() (legacy)
+    bind(), unbind(), delegate(), undelegate() (legacy)
 
 
 TODO: Add support for:
     .one()
-    .find()
     .closest(), .parent(), .children()
     .toggleClass()
-    $dom.create(htmlstring)
+    $dom.create(htmlstring): document fragments?
 
 TODO: rename project (see https://github.com/julienw/dollardom)

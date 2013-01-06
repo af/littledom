@@ -53,6 +53,29 @@
             return arrayProto.splice.apply(this.results, args);
         },
 
+        // jQuery.find() work-alike
+        find: function(subQuery) {
+            var results = [];
+            this.each(function(el) {
+                var els = arrayProto.slice.call(el.querySelectorAll(subQuery));
+                results = results.concat(els);
+            });
+
+            // Return a new, clean $dom object with the results of the query
+            // TODO: save the old object's state somewhere so we can support .end()
+            var newObj = new $dom();
+            makeArrayLike(newObj, results);
+            return newObj;
+        },
+
+        // Remove each element from the DOM.
+        // Note that this doesn't support a query argument like jQuery's remove() does
+        remove: function() {
+            return this.each(function(el) {
+                el.parentNode.removeChild(el);
+            });
+        },
+
         // jQuery.html() work-alike
         html: function(markup) {
             if (markup) {
