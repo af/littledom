@@ -289,7 +289,10 @@
         each: function(fn) { this.results.forEach(fn); return this; },
         forEach: function(fn) { this.results.forEach(fn); return this; },
         map: function(fn) { return this.results.map(fn); },
-        filter: function(fn) { return this.results.filter(fn); }
+        filter: function(fn) { return this.results.filter(fn); },
+
+        // Return the result set as an array:
+        toArray: function() { return this.results; }
     }
 
     // Register a callback function for when the document is ready to go.

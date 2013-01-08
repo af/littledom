@@ -324,5 +324,15 @@ describe('$dom', function() {
             assertEqual($dom('h6') instanceof $dom, true);
             assertEqual($dom('doesnotexist') instanceof $dom, true);
         });
+
+        it('toArray() returns a correct array', function() {
+            var array = $dom('h6').toArray();
+            assertEqual(array.length, 1);
+            assertEqual(array[0], $dom('h6')[0]);
+
+            var array2 = $dom('#test_elements li').toArray();
+            assertEqual(array2.length, 4);
+            assertEqual(array2[0], $dom('#test_elements li')[0]);
+        });
     });
 });
