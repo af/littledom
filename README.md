@@ -103,8 +103,7 @@ API
 ```
 
 
-```
-TODO: 
+## TODO:
     * Perf tests
     * Add support for:
         .one()
@@ -112,4 +111,3 @@ TODO:
         .toggleClass()
         $dom.create(htmlstring)
     * Address API gaps that are causing problems with Backbone pre-1.0
-```
