@@ -1,11 +1,11 @@
-dollardom
+littledom
 =========
 
-dollardom is a really tiny jQuery work-alike. Its goal is to see how much of jQuery's
+littledom is a really tiny jQuery work-alike. Its goal is to see how much of jQuery's
 DOM manipulation functionality can be fit into 1k (minified & gzipped) if old browser
 support (IE < 9) is not required.
 
-dollardom is *not* a drop-in replacement for jQuery, but it does implement most of its
+littledom is *not* a drop-in replacement for jQuery, but it does implement most of its
 most commonly used methods.
 
 Depends on
@@ -55,5 +55,3 @@ TODO: Add support for:
     .closest(), .parent(), .children()
     .toggleClass()
     $dom.create(htmlstring): document fragments?
-
-TODO: rename project (see https://github.com/julienw/dollardom)
