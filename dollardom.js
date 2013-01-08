@@ -308,4 +308,9 @@
     $dom.fn.init.prototype = $dom.fn;
 
     window.$dom = $dom;
+
+    // Export using CommonJS or to the window.
+    if (typeof(module) !== 'undefined') module.exports = $dom;
+    else window.$dom = $dom;
+
 }(window));
