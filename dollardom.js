@@ -2,7 +2,8 @@
     var document = window.document;
     var arrayProto = Array.prototype;
 
-    var delegationHandlers = {};    // Used to store callbacks for event delegation (see on() and off())
+    // Used to store callbacks for event delegation (see on() and off()):
+    var delegationHandlers = {};
 
     // Helper function to make obj look like an array (where items is an array to copy over)
     function makeArrayLike(obj, items) {
@@ -17,10 +18,9 @@
     }
 
     $dom.fn = $dom.prototype = {
-        constructor: $dom,
         length: 0,
-        results: [],
-        context: document,
+        results: [],            // Stores the results of queries (an array of dom nodes)
+        context: document,      // May be overridden if a second arg is passed in to $dom()
 
         init: function(query, context) {
             if (!query) return this;
@@ -307,7 +307,8 @@
     // but should be true for all browsers in use as of this writing:
     $dom.browserSupported = (!!document.addEventListener && !!document.querySelectorAll);
 
-    // Ripped off from jQuery, replace later:
+    // Prototype trickery (copied from jQuery), which ensures that
+    // ($dom('div') instanceof $dom) => true
     $dom.fn.init.prototype = $dom.fn;
 
     window.$dom = $dom;
