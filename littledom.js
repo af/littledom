@@ -11,7 +11,30 @@
         for (var i=0, l=items.length; i<l; i+=1) {
             obj[i] = items[i];
         }
+        return obj;
     }
+
+    // Utilities for handling html string inputs to $dom()
+    // This code was adapted from zepto.js:
+    var htmlStringRE = /^\s*<(\w+|!)[^>]*>/;
+    var table = document.createElement('table');
+    var tableRow = document.createElement('tr');
+    var containers = {
+        'tr': document.createElement('tbody'),
+        'tbody': table, 'thead': table, 'tfoot': table,
+        'td': tableRow, 'th': tableRow,
+        '*': document.createElement('div')
+    };
+    var createElementsFromHtmlString = function(html, name) {
+        if (name === undefined) name = htmlStringRE.test(html) && RegExp.$1;
+        if (!(name in containers)) name = '*';
+        var container = containers[name];
+        container.innerHTML = '' + html;
+        var els = arrayProto.slice.call(container.childNodes);
+        els.forEach(function(el){ container.removeChild(el); });
+        return els;
+    };
+
 
     var $dom = function(query, context) {
         return new $dom.fn.init(query, context);
@@ -24,6 +47,13 @@
 
         init: function(query, context) {
             if (!query) return this;
+
+            // If an html string was passed in, attempt to create new elements:
+            if (htmlStringRE.test(query)) {
+                this.results = createElementsFromHtmlString(query.trim(), RegExp.$1);
+                return makeArrayLike(this, this.results);
+            }
+
             if (context) {
                 // Ensure that the context argument is a DOM node:
                 if (context.nodeType) this.context = context;
@@ -37,8 +67,7 @@
                 var results = this.qsa(query);
                 this.results = arrayProto.slice.call(results);
             }
-            makeArrayLike(this, this.results);
-            return this;
+            return makeArrayLike(this, this.results);
         },
 
         // Tiny wrapper over browser's doc.QSA

@@ -66,6 +66,26 @@ describe('$dom', function() {
         });
     });
 
+    describe('html input', function() {
+        it('creates new elements when given html', function() {
+            var q = $dom('<div class="foo"></div>');
+            assertEqual(q.length, 1);
+            assertEqual(q[0].tagName, 'DIV');
+            assertEqual(q[0].className, 'foo');
+
+            q = $dom('<div class="boo"></div><div class="radley"></div>');
+            assertEqual(q.length, 2);
+            assertEqual(q[1].tagName, 'DIV');
+            assertEqual(q[1].className, 'radley');
+
+            // Test nested elements:
+            q = $dom('<div class="boo"><h1>hi</h1></div>');
+            assertEqual(q.length, 1);
+            assertEqual(q[0].tagName, 'DIV');
+            assertEqual(q[0].firstChild.tagName, 'H1');
+        });
+    });
+
 
     describe('array methods', function() {
         it('each method works', function() {
