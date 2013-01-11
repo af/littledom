@@ -151,6 +151,27 @@
             return this;
         },
 
+        // Toggle a class for all matched elements.
+        // The second argument, if provided, is a boolean that, if present,
+        // indicates that all elements should have (if true) or not have (if false)
+        // the given class.
+        // Note that this method currently only accepts a single class name
+        toggleClass: function(className, forceExistence) {
+            var useSecondArg = (forceExistence !== undefined);
+            var toggle = !useSecondArg;
+            var forceOn = useSecondArg && forceExistence;
+            var forceOff = useSecondArg && !forceExistence;
+            var regex = new RegExp('\\b' + className + '\\b');
+
+            for (var i=0; i<this.length; i++) {
+                var el = this.results[i];
+                var hasClass = el.className.match(regex);
+                if (!hasClass && !forceOff) el.className += (' ' + className);
+                else if (hasClass && !forceOn) el.className = el.className.replace(regex, '');
+            }
+            return this;
+        },
+
         // Hide all matched elements using display: none
         hide: function() {
             this.each(function(el) { el.style.display = 'none'; });

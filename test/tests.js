@@ -159,6 +159,19 @@ describe('$dom', function() {
             assertEqual($dom('li').hasClass('asdfasdf'), false);
             assertEqual($dom('li').hasClass('last'), true);
         });
+
+        it('toggleClass() works', function() {
+            assertEqual($dom('li.last').toggleClass('last').hasClass('last'), false);
+            assertEqual($dom('#listTest').toggleClass('foo').hasClass('foo'), true);
+
+            // Second arg forces class for element with the class name:
+            assertEqual($dom('li.first').toggleClass('first', true).hasClass('first'), true);
+            assertEqual($dom('li.first').toggleClass('first', false).hasClass('first'), false);
+
+            // Second arg forces class for element without the class name:
+            assertEqual($dom('#listTest').toggleClass('baz', false).hasClass('baz'), false);
+            assertEqual($dom('#listTest').toggleClass('baz', true).hasClass('baz'), true);
+        });
     });
 
     describe('events', function() {

@@ -107,5 +107,4 @@ API
     * Add support for:
         .one()
         .closest(), .parent(), .children()
-        .toggleClass()
         $dom.create(htmlstring)
