@@ -94,6 +94,7 @@
             // TODO: save the old object's state somewhere so we can support .end()
             var newObj = new $dom();
             makeArrayLike(newObj, results);
+            newObj.results = results;
             return newObj;
         },
 
