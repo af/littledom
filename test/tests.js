@@ -145,6 +145,15 @@ describe('$dom', function() {
             assertEqual($el.attr('testAttr2'), 'asdf');
         });
 
+        it('attr() treats "class" like "className"', function() {
+            var $el = $dom('#hideTest');
+            $el.attr({ 'class': 'hello_world' });
+            assertEqual($el.hasClass('hello_world'), true);
+
+            $el.attr('class', 'goodbye');
+            assertEqual($el.hasClass('goodbye'), true);
+        });
+
         it('remove() removes elements from the DOM', function() {
             var $els = $dom('section#test_elements div');
             assertEqual($els.length, 6);

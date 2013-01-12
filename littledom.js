@@ -229,11 +229,15 @@
             if (!attrName) return this;
             else if (singleStringArg) return this.results[0] ? this.results[0][attrName] : undefined;
 
-            var transformFn = function(el) { el[attrName] = attrValue; };
+            var transformFn = function(el) {
+                if (attrName === 'class') el.className = attrValue; // Handle "class" key like jQuery does
+                else el[attrName] = attrValue;
+            };
             if (hashArg) {
                 transformFn = function(el) {
                     for (var k in hashArg) {
-                        if (hashArg.hasOwnProperty(k)) el[k] = hashArg[k];
+                        if (k === 'class') el.className = hashArg[k];   // Handle "class" key like jQuery does
+                        else if (hashArg.hasOwnProperty(k)) el[k] = hashArg[k];
                     }
                 };
             }
