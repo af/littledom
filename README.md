@@ -1,3 +1,5 @@
+[![Build Status](https://secure.travis-ci.org/af/littledom.png)](http://travis-ci.org/af/littledom)
+
 littledom
 =========
 
