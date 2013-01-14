@@ -1,0 +1,1 @@
+script: phantomjs test/phantomjs_run_tests.js
