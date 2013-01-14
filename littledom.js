@@ -357,6 +357,12 @@
         else window.addEventListener('DOMContentLoaded', fn, false);
     }
 
+    $dom.create = function(htmlString) {
+        var results = createElementsFromHtmlString(htmlString.trim(), RegExp.$1);
+        var newObj = new $dom();
+        return makeArrayLike(newObj, results);
+    };
+
     // Boolean indicating whether the current browser is supported by this library:
     // This is not an exhaustive test (this code also uses DOMContentLoaded and ES5 array methods),
     // but should be true for all browsers in use as of this writing:

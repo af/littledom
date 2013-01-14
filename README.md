@@ -60,6 +60,7 @@ API
 
     $dom.ready(callback)    -> equivalent to $(document).ready(callback)
     $dom.browserSupported   -> boolean indicating whether the browser is supported by the library.
+    $dom.create(htmlString) -> create a set of elements from an html string (like $(htmlString))
 
 ## Supported jQuery API subset:
 
@@ -109,4 +110,3 @@ API
     * Add support for:
         .one()
         .closest(), .parent(), .children()
-        $dom.create(htmlstring)
