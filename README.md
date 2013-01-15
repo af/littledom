@@ -98,6 +98,8 @@ API
     // ES5 Array methods
     each()
     map()
+    some()
+    every()
     filter()                -> NOTE: works like the ES5 array method, not jquery's method
 
     // Misc

@@ -110,7 +110,7 @@
         html: function(markup) {
             if (markup) {
                 // Set the innerHTML for all matched elements:
-                this.each(function(el) { el.innerHTML = String(markup); })
+                this.each(function(el) { el.innerHTML = String(markup); });
                 return this;
             } else {
                 // Return the innerHTML for the first matched element
@@ -149,6 +149,7 @@
         // classNames can be a space-separated list of classes, eg. 'foo bar baz'
         addClass: function(classNames) {
             var classes = (classNames || '').split(' ');
+            // FIXME: Don't nest for loops here
             for (var i=0, l=classes.length; i<l; i++) {
                 var cls = classes[i];
                 var regex = new RegExp('\\b' + cls + '\\b');
@@ -163,10 +164,9 @@
         // Return true if any matched element has the given class.
         hasClass: function(className) {
             var regex = new RegExp('\\b' + className + '\\b');
-            for (var i=0; i<this.length; i++) {
-                if (regex.test(this.results[i].className)) return true;
-            }
-            return false;
+            return this.some(function(el) {
+                if (regex.test(el.className)) return true;
+            });
         },
 
         // Remove class(es) from all matched elements.
@@ -174,11 +174,9 @@
         removeClass: function(classNames) {
             var classes = (classNames || '').split(' ');
             var regex = new RegExp('\\b' + classes.join('|') + '\\b', 'g');
-            for (var i=0; i<this.length; i++) {
-                var el = this.results[i];
+            return this.each(function(el) {
                 el.className = el.className.replace(regex, '');
-            }
-            return this;
+            });
         },
 
         // Toggle a class for all matched elements.
@@ -193,13 +191,11 @@
             var forceOff = useSecondArg && !forceExistence;
             var regex = new RegExp('\\b' + className + '\\b');
 
-            for (var i=0; i<this.length; i++) {
-                var el = this.results[i];
+            return this.each(function(el) {
                 var hasClass = el.className.match(regex);
                 if (!hasClass && !forceOff) el.className += (' ' + className);
                 else if (hasClass && !forceOn) el.className = el.className.replace(regex, '');
-            }
-            return this;
+            });
         },
 
         // Hide all matched elements using display: none
@@ -345,6 +341,8 @@
         forEach: function(fn) { this.results.forEach(fn); return this; },
         map: function(fn) { return this.results.map(fn); },
         filter: function(fn) { return this.results.filter(fn); },
+        some: function(fn) { return this.results.some(fn); },
+        every: function(fn) { return this.results.some(fn); },
 
         // Return the result set as an array:
         toArray: function() { return this.results; }
