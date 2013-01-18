@@ -4,6 +4,9 @@
 
     // Used to store callbacks for event delegation (see on() and off()):
     var delegationHandlers = {};
+    function makeDelegationKey(fn, evtName, subselector) {
+        return evtName + '-' + subselector + '-' + fn;
+    }
 
     // Helper function to make obj look like an array (where items is an array to copy over)
     function makeArrayLike(obj, items) {
@@ -280,8 +283,8 @@
                     }
                 };
 
-                // TODO: using the handler function as a key is probably a bad approach, but it works
-                delegationHandlers[handler] = wrappedHandler;
+                var key = makeDelegationKey(handler, evtName, delegateTo);
+                delegationHandlers[key] = wrappedHandler;
 
                 this.each(function(el) {
                     el.addEventListener(evtName, wrappedHandler, false);
@@ -305,8 +308,11 @@
             }
 
             // retrieve the wrapped handler function to be passed to removeEventListener()
-            // TODO: remove the handler from delegationHandlers
-            if (delegateTo) handler = delegationHandlers[handler];
+            if (delegateTo) {
+                var key = makeDelegationKey(handler, evtName, delegateTo);
+                handler = delegationHandlers[key];
+                delete delegationHandlers[key];
+            }
 
             this.each(function(el) {
                 el.removeEventListener(evtName, handler, false);
