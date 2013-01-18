@@ -152,16 +152,19 @@
         // classNames can be a space-separated list of classes, eg. 'foo bar baz'
         addClass: function(classNames) {
             var classes = (classNames || '').split(' ');
-            // FIXME: Don't nest for loops here
+            var regexps = {};
             for (var i=0, l=classes.length; i<l; i++) {
                 var cls = classes[i];
-                var regex = new RegExp('\\b' + cls + '\\b');
-                for (var j=0; j<this.length; j++) {
-                    var el = this.results[j];
-                    if (!el.className.match(regex)) el.className += (' ' + cls);
-                }
+                regexps[cls] = (new RegExp('\\b' + cls + '\\b'));
             }
-            return this;
+
+            // For each element, check if each classname is applied, and if not, add it.
+            return this.each(function(el) {
+                classes.forEach(function(cls) {
+                    var re = regexps[cls];
+                    if (!el.className.match(re)) el.className += (' ' + cls);
+                });
+            });
         },
 
         // Return true if any matched element has the given class.
