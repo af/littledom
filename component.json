@@ -3,11 +3,10 @@
   "repo": "af/littledom",
   "description": "Small jQuery-like DOM library.",
   "version": "0.0.1",
-  "keywords": [],
+  "keywords": ["dom", "events"],
   "dependencies": {},
   "development": {},
   "license": "MIT",
-  "scripts": [
-    "littledom.js"
-  ]
+  "scripts": [ "littledom.js" ],
+  "main": "littledom.js"
 }
