@@ -1,0 +1,13 @@
+{
+  "name": "littledom",
+  "repo": "af/littledom",
+  "description": "Small jQuery-like DOM library.",
+  "version": "0.0.1",
+  "keywords": [],
+  "dependencies": {},
+  "development": {},
+  "license": "MIT",
+  "scripts": [
+    "littledom.js"
+  ]
+}
