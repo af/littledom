@@ -71,6 +71,10 @@ API
     find(selector)
     remove()                -> remove all matched elements from the document (doesn't take any arguments)
 
+    // Traversal:
+    parent()                -> Returns all unique parents of the selected elements
+    unique()                -> Returns a unique set of the selected elements
+
     // Classes and attributes:
     addClass(className)
     removeClass(className)
@@ -111,4 +115,4 @@ API
 ## TODO:
     * Add support for:
         .one()
-        .closest(), .parent(), .children()
+        .closest(), .children()

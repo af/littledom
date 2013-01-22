@@ -221,6 +221,23 @@ describe('$dom', function() {
         });
     });
 
+    describe('traversal', function() {
+        it('parent() returns all unique parents of the selected elements', function() {
+            var parentObj = $dom('#hideTest').parent();
+            assertEqual(parentObj.length, 1);
+            assertEqual(parentObj[0].id, 'testElements');
+
+            // Ensure that the same element doesn't show up multiple times:
+            var parentObj2 = $dom('#testElements li').parent();
+            assertEqual(parentObj2.length, 1);
+            assertEqual(parentObj2[0].id, 'listTest');
+
+            // Multiple unique parent els are returned:
+            var parentObj3 = $dom('#testElements div').parent();
+            assertEqual(parentObj3.length, 2);
+        });
+    });
+
     describe('events', function() {
         var count = 0;
         var handler = function(evt) { count++; };

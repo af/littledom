@@ -255,6 +255,20 @@
             });
         },
 
+        // Return a unique set of the selected elements
+        unique: function() {
+            var uniques = [];
+            this.results.forEach(function(el) {
+                if (uniques.indexOf(el) === -1) uniques.push(el);
+            });
+            return makeArrayLike(new $dom(), uniques);
+        },
+
+        // Return the unique parents of the selected elements
+        parent: function() {
+            var els = this.map(function(el) { return el.parentNode; });
+            return this.unique.call({ results: els });
+        },
 
         // Events
 
