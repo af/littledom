@@ -116,3 +116,4 @@ API
     * Add support for:
         .one()
         .closest(), .children()
+        .data() implementation that *only* stores to DOM data attributes

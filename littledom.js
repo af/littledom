@@ -101,6 +101,21 @@
             return newObj;
         },
 
+        // Return the unique parents of the selected elements
+        parent: function() {
+            var els = this.map(function(el) { return el.parentNode; });
+            return this.unique.call({ results: els });
+        },
+
+        // Return a unique set of the selected elements
+        unique: function() {
+            var uniques = [];
+            this.results.forEach(function(el) {
+                if (uniques.indexOf(el) === -1) uniques.push(el);
+            });
+            return makeArrayLike(new $dom(), uniques);
+        },
+
         // Remove each element from the DOM.
         // Note that this doesn't support a query argument like jQuery's remove() does
         remove: function() {
@@ -126,6 +141,7 @@
         // attr, value: sets each element's el.style[attr] to value
         // attr: returns the value of the first element's el.style[attr]
         // map: sets each element's el.style for each attr, value pair in the map
+        // FIXME: convert one-two to oneTwo for property names
         css: function(attr, value) {
             var isMap = (typeof attr === 'object');
             if (isMap) {
@@ -146,6 +162,22 @@
                 return this.results[0].style[attr] ||
                        window.getComputedStyle(this.results[0])[attr];
             }
+        },
+
+        // Hide all matched elements using display: none
+        hide: function() {
+            this.each(function(el) { el.style.display = 'none'; });
+            return this;
+        },
+
+        // Show all matched elements.
+        // Since display is a "non-inherited" property [1], the browser should
+        // automatically choose whether the element(s) are displayed as
+        // block/inline/etc when we set display to 'inherit'.
+        // [1] https://developer.mozilla.org/en-US/docs/CSS/inheritance
+        show: function() {
+            this.each(function(el) { el.style.display = 'inherit'; });
+            return this;
         },
 
         // Add class(es) to all matched elements.
@@ -204,22 +236,6 @@
             });
         },
 
-        // Hide all matched elements using display: none
-        hide: function() {
-            this.each(function(el) { el.style.display = 'none'; });
-            return this;
-        },
-
-        // Show all matched elements.
-        // Since display is a "non-inherited" property [1], the browser should
-        // automatically choose whether the element(s) are displayed as
-        // block/inline/etc when we set display to 'inherit'.
-        // [1] https://developer.mozilla.org/en-US/docs/CSS/inheritance
-        show: function() {
-            this.each(function(el) { el.style.display = 'inherit'; });
-            return this;
-        },
-
         // Get/Set attributes for all matched elements.
         // Acceptable call signatures:
         // attr(<string attrName>)  -> return the attribute of the first matched element
@@ -253,21 +269,6 @@
             return this.each(function(el) {
                 el.removeAttribute(attrName);
             });
-        },
-
-        // Return a unique set of the selected elements
-        unique: function() {
-            var uniques = [];
-            this.results.forEach(function(el) {
-                if (uniques.indexOf(el) === -1) uniques.push(el);
-            });
-            return makeArrayLike(new $dom(), uniques);
-        },
-
-        // Return the unique parents of the selected elements
-        parent: function() {
-            var els = this.map(function(el) { return el.parentNode; });
-            return this.unique.call({ results: els });
         },
 
         // Events
