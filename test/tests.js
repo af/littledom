@@ -236,6 +236,18 @@ describe('$dom', function() {
             var parentObj3 = $dom('#testElements div').parent();
             assertEqual(parentObj3.length, 2);
         });
+
+        it('first() returns the first matched element', function() {
+            var q = $dom('#testElements li').first();
+            assertEqual(q.length, 1);
+            assertEqual(q.hasClass('first'), true);
+        });
+
+        it('last() returns the last matched element', function() {
+            var q = $dom('#testElements li').last();
+            assertEqual(q.length, 1);
+            assertEqual(q.hasClass('last'), true);
+        });
     });
 
     describe('events', function() {

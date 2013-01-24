@@ -17,6 +17,12 @@
         return obj;
     }
 
+    function newWrapperFromArray(items) {
+        var d = new $dom;
+        d.results = items;
+        return makeArrayLike(d, items);
+    }
+
     // Utilities for handling html string inputs to $dom()
     // This code was adapted from zepto.js:
     var htmlStringRE = /^\s*<(\w+|!)[^>]*>/;
@@ -113,7 +119,17 @@
             this.results.forEach(function(el) {
                 if (uniques.indexOf(el) === -1) uniques.push(el);
             });
-            return makeArrayLike(new $dom(), uniques);
+            return newWrapperFromArray(uniques);
+        },
+
+        first: function() {
+            var arr = this.length ? [ this.results[0] ] : [];
+            return newWrapperFromArray(arr);
+        },
+
+        last: function() {
+            var arr = this.length ? [ this.results[this.length - 1] ] : [];
+            return newWrapperFromArray(arr);
         },
 
         // Remove each element from the DOM.

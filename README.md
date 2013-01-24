@@ -74,6 +74,8 @@ API
     // Traversal:
     parent()                -> Returns all unique parents of the selected elements
     unique()                -> Returns a unique set of the selected elements
+    first()                 -> Returns the first selected element (wrapped)
+    last()                  -> Returns the last selected element (wrapped)
 
     // Classes and attributes:
     addClass(className)
