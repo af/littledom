@@ -8,22 +8,9 @@ as a curated jQuery subset, optimized for readability and file size. There's sti
 lots of room for more features within its 2kb (minified & gzipped) budget, so feel free to
 fork and add the API support that you want.
 
-
-Motivation
-----------
-
-Despite jQuery's massive success and ultra-handy API, it's no longer the right fit for every
-project (if it ever was) for a few reasons:
-
-    * Filesize: >30kb is big if you're only using a small subset of the library (especially on mobile)
-    * Huge codebase (out of necessity) that's hard to understand at a glance.
-    * Big API surface area and highly overloaded method signatures make it impossible
-      to keep the whole library in your head (not that this is essential, but it is nice).
-
 littledom is *not* a drop-in replacement for jQuery, but it does implement many of its
 most commonly used methods. In many cases, not all method signatures are supported either.
-This keeps the code lean and pretty simple to read. The following parts of jQuery are intentionally 
-omitted- if you need them you might consider a best-of-breed standalone library instead:
+This keeps the code lean and pretty simple to read. The following parts of jQuery are intentionally omitted- if you need them you might consider a best-of-breed standalone library instead:
 
     * ajax() and friends
     * promises
