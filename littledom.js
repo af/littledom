@@ -1,4 +1,5 @@
 (function(window) {
+    "use strict";
     var document = window.document;
     var arrayProto = Array.prototype;
 
