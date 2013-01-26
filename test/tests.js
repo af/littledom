@@ -339,6 +339,15 @@ describe('$dom', function() {
             assertEqual(count, 43);
         });
 
+        it('discards jQuery style event namespaces, but still works', function() {
+            $el.on('click', handler);
+            $el.on('click.eventNamespace', handler2);
+            $el.trigger('click');
+            assertEqual(count, 11);
+            $el.trigger('click');
+            assertEqual(count, 22);
+        });
+
         it('event delegation works for events triggered directly on the delegate', function() {
             $dom(document).on('click', 'h6', handler);
 

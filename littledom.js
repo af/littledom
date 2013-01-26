@@ -294,6 +294,9 @@
         // $dom does not provide click(), mouseover(), etc so you should use on() for
         // pretty much all event binding.
         on: function(evtName, delegateTo, handler) {
+            // If the event name uses jQuery-style namespaces, just discard the namespace:
+            evtName = evtName.split(/[\.\ ]/)[0];
+
             if (!handler) {
                 handler = delegateTo;   // If only two args were provided
                 delegateTo = null;
