@@ -57,6 +57,8 @@ API
     html(contents)          -> sets innerHTML for all matched elements to the given string
     find(selector)
     remove()                -> remove all matched elements from the document (doesn't take any arguments)
+    data(attrName)          -> return the value of the given data-* attribute (for the first matched element where it's set)
+    data(attrName, val)     -> set data-attrName to the given value for all matched elements
 
     // Traversal:
     parent()                -> Returns all unique parents of the selected elements
@@ -105,4 +107,3 @@ API
     * Add support for:
         .one()
         .closest(), .children()
-        .data() implementation that *only* stores to DOM data attributes

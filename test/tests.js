@@ -407,6 +407,26 @@ describe('$dom', function() {
         });
     });
 
+    describe('data()', function() {
+        it('reads data from data-* attributes', function() {
+            var name = $dom('#topDiv').data('name');
+            assertEqual(name, 'Bob');
+
+            var num = $dom('#topDiv').data('number');
+            assertEqual(num, '34');
+        });
+
+        it('saves data to data-* attributes', function() {
+            // Works when overwriting existing data:
+            $dom('#topDiv').data('number', '123');
+            assertEqual($dom('#topDiv')[0].dataset.number, '123');
+
+            // Always returns strings (no type coercion like jQuery);
+            $dom('#topDiv').data('number', 42);
+            assertEqual($dom('#topDiv')[0].dataset.number, '42');
+        });
+    });
+
     describe('utilities', function() {
         it('browserSupported works', function() {
             assertEqual($dom.browserSupported, (!!document.querySelectorAll && !!document.addEventListener));

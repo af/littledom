@@ -379,6 +379,28 @@
             });
         },
 
+        // Read/write data attributes on elements.
+        // Unlike jQuery's implementation:
+        //  * this doesn't do any funky type coercions (strings are always returned)
+        //  * there's no funky legacy in-memory storage- only data attributes are used
+        data: function(attrName, attrValue) {
+            if (!attrName) return this;
+
+            if (attrName && attrValue) {
+                return this.each(function(el) {
+                    var value = el.dataset[attrName] = attrValue;
+                });
+            }
+
+            // If we just received attrName, return the data-attr value from
+            // the first matched element that has that value
+            for (var i=0, l=this.results.length; i<l; i++) {
+                var value = this.results[i].dataset[attrName];
+                if (value) return value;
+            }
+            return undefined;    // If we didn't read or write any data, return undefined
+        },
+
         // Expose ES5 array methods on query results:
         // TODO: consider rewriting each() with a for loop for speed.
         each: function(fn) { this.results.forEach(fn); return this; },
