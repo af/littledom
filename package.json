@@ -1,0 +1,23 @@
+{
+  "name": "littledom",
+  "version": "0.0.1",
+  "description": "Small jQuery-like DOM library",
+  "main": "littledom.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "phantomjs test/phantomjs_run_tests.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/af/littledom.git"
+  },
+  "keywords": [
+    "browser",
+    "DOM",
+    "events"
+  ],
+  "author": "Aaron Franks",
+  "license": "MIT"
+}
