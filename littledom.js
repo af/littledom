@@ -436,9 +436,7 @@
     // ($dom('div') instanceof $dom) => true
     $dom.fn.init.prototype = $dom.fn;
 
-    window.$dom = $dom;
-
-    // Export using CommonJS or to the window.
+    // Export for node-style CommonJS modules, otherwise add a global to the window object:
     if (typeof(module) !== 'undefined') module.exports = $dom;
     else window.$dom = $dom;
 
