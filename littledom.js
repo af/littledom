@@ -365,17 +365,13 @@
         unbind: function(evtName, handler) { return this.off(evtName, null, handler); },
 
         // Trigger an event on the matching elements.
-        // This is usually just used to manually invoke click handlers, etc, and for the simple
-        // case a very basic dummy event object will be passed to the handler(s).
-        // However you can optionally pass in your own event object as a second parameter.
-        trigger: function(evtName, eventObj) {
-            if (!eventObj) {
-                // TODO: consider a more intelligent default event object (based on evtName)
-                eventObj = document.createEvent('MouseEvent');
-                eventObj.initMouseEvent(evtName, true, true, window);
-            }
+        // This is usually just used to manually invoke click handlers, etc, and
+        // a very basic event object will be passed to the handler(s).
+        trigger: function(evtName) {
+            var evt = new window.Event(evtName, { bubbles: true });
+
             this.each(function(el) {
-                el.dispatchEvent(eventObj);
+                el.dispatchEvent(evt);
             });
         },
 

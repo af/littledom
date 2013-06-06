@@ -87,7 +87,7 @@ API
     on(eventName, delegationSelector, handler)
     off(eventName, handler)
     off(eventName, delegationSelector, handler)
-    trigger(eventName, [eventObject])           -> trigger an event on each matched element
+    trigger(eventName)           -> trigger an event on each matched element
     bind(), unbind(), delegate(), undelegate() (legacy)
 
     // ES5 Array methods
