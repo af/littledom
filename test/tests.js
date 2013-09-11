@@ -143,6 +143,13 @@ describe('$dom', function() {
             assertEqual(QSA('#listTest > li')[3].innerHTML, 'bar');
         });
 
+        it('html() works when passed an empty string', function() {
+            assertEqual($dom('#htmlTest').html(), 'foo');
+            var result = $dom('#htmlTest').html('');
+            assertEqual(result.length, 1);
+            assertEqual(QSA('#htmlTest')[0].innerHTML, '');
+        });
+
         it('attr() and removeAttr() work for setting element ids', function() {
             assertEqual($dom('#hideTest').attr('id'), 'hideTest');
             assertEqual($dom('#hideTest').attr('id', 'foo')[0].id, 'foo');

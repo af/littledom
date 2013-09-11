@@ -143,7 +143,7 @@
 
         // jQuery.html() work-alike
         html: function(markup) {
-            if (markup) {
+            if (typeof markup === 'string') {
                 // Set the innerHTML for all matched elements:
                 this.each(function(el) { el.innerHTML = String(markup); });
                 return this;
