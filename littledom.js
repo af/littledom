@@ -368,7 +368,11 @@
         // This is usually just used to manually invoke click handlers, etc, and
         // a very basic event object will be passed to the handler(s).
         trigger: function(evtName) {
-            var evt = new window.Event(evtName, { bubbles: true });
+            // Ideally we would init a new event with the following:
+            //     var evt = new window.Event(evtName, { bubbles: true });
+            // But this doesn't work on phantomjs. See comments on https://github.com/ariya/phantomjs/issues/11289
+            var evt = document.createEvent('CustomEvent');
+            evt.initCustomEvent(evtName, true, true, window);
 
             this.each(function(el) {
                 el.dispatchEvent(evt);
