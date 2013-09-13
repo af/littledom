@@ -460,4 +460,24 @@ describe('$dom', function() {
             assertEqual(array2[0], $dom('#test_elements li')[0]);
         });
     });
+
+    describe('append()', function() {
+        afterEach(function() {
+            // Clean up inserted elements
+            $dom('#test_elements div.append_el').remove();
+        });
+
+        it('accepts an html string', function() {
+            $dom('#test_elements').append('<div class="append_el">hi</div>');
+            var $inserted = $dom('#test_elements div.append_el');
+            assertEqual($inserted.length, 1);
+            assertEqual($inserted.html(), 'hi');
+        });
+
+        it('accepts an html string with multiple elements', function() {
+            $dom('#test_elements').append('<div class="append_el">one</div> <div class="append_el">two</div>');
+            assertEqual($dom('#test_elements div.append_el').length, 2);
+            assertEqual($dom('#test_elements div.append_el').html(), 'one');    // Returns the first result
+        });
+    });
 });

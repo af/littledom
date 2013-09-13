@@ -401,6 +401,16 @@
             return undefined;    // If we didn't read or write any data, return undefined
         },
 
+        // Append html to the end of all of the matched elements.
+        append: function(contentToInsert) {
+            var newEls = createElementsFromHtmlString(contentToInsert);
+            return this.each(function(selectedEl) {
+                newEls.forEach(function(newEl) {
+                    selectedEl.appendChild(newEl);
+                });
+            });
+        },
+
         // Expose ES5 array methods on query results:
         // TODO: consider rewriting each() with a for loop for speed.
         each: function(fn) { this.results.forEach(fn); return this; },
