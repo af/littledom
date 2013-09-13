@@ -462,22 +462,44 @@ describe('$dom', function() {
     });
 
     describe('append()', function() {
+        var $root = $dom('#test_elements');
+
         afterEach(function() {
             // Clean up inserted elements
-            $dom('#test_elements div.append_el').remove();
+            $root.find('div.append_el').remove();
         });
 
         it('accepts an html string', function() {
-            $dom('#test_elements').append('<div class="append_el">hi</div>');
-            var $inserted = $dom('#test_elements div.append_el');
+            $root.append('<div class="append_el">hi</div>');
+            var $inserted = $root.find('div.append_el');
             assertEqual($inserted.length, 1);
             assertEqual($inserted.html(), 'hi');
         });
 
         it('accepts an html string with multiple elements', function() {
-            $dom('#test_elements').append('<div class="append_el">one</div> <div class="append_el">two</div>');
-            assertEqual($dom('#test_elements div.append_el').length, 2);
-            assertEqual($dom('#test_elements div.append_el').html(), 'one');    // Returns the first result
+            $root.append('<div class="append_el">one</div> <div class="append_el">two</div>');
+
+            var $inserted = $root.find('div.append_el');
+            assertEqual($inserted.length, 2);
+            assertEqual($inserted.html(), 'one');    // Returns the first element's content
+        });
+
+        it('accepts a $dom object with one element and appends its element', function() {
+            var $newEls = $dom('<div class="append_el">hi</div>');
+            $root.append($newEls);
+
+            var $inserted = $root.find('div.append_el');
+            assertEqual($inserted.length, 1);
+            assertEqual($inserted.html(), 'hi');
+        });
+
+        it('accepts a $dom object with multiple elements and appends them', function() {
+            var $newEls = $dom('<div class="append_el">one</div> <div class="append_el">two</div>');
+            $root.append($newEls);
+
+            var $inserted = $root.find('div.append_el');
+            assertEqual($inserted.length, 2);
+            assertEqual($inserted.html(), 'one');    // Returns the first element's content
         });
     });
 });

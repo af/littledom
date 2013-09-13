@@ -402,8 +402,16 @@
         },
 
         // Append html to the end of all of the matched elements.
+        // Accepts a string of html, or a $dom instance.
         append: function(contentToInsert) {
-            var newEls = createElementsFromHtmlString(contentToInsert);
+            var newEls = [];
+            if (!contentToInsert) return;
+
+            if (contentToInsert instanceof $dom) {
+                newEls = contentToInsert.toArray();
+            } else {
+                newEls = createElementsFromHtmlString(contentToInsert);
+            }
             return this.each(function(selectedEl) {
                 newEls.forEach(function(newEl) {
                     selectedEl.appendChild(newEl);
