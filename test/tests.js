@@ -501,5 +501,16 @@ describe('$dom', function() {
             assertEqual($inserted.length, 2);
             assertEqual($inserted.html(), 'one');    // Returns the first element's content
         });
+
+        it('accepts a DOM node and appends it', function() {
+            var newEl = document.createElement('div');
+            newEl.className = 'append_el';
+            newEl.textContent = 'hi';
+            $root.append(newEl);
+
+            var $inserted = $root.find('div.append_el');
+            assertEqual($inserted.length, 1);
+            assertEqual($inserted.html(), 'hi');
+        });
     });
 });

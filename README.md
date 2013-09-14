@@ -59,6 +59,7 @@ API
     remove()                -> remove all matched elements from the document (doesn't take any arguments)
     data(attrName)          -> return the value of the given data-* attribute (for the first matched element where it's set)
     data(attrName, val)     -> set data-attrName to the given value for all matched elements
+    append(content)         -> Append content ($dom instance, DOM node, or html string) to each element
 
     // Traversal:
     parent()                -> Returns all unique parents of the selected elements
