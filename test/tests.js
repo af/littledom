@@ -513,4 +513,38 @@ describe('$dom', function() {
             assertEqual($inserted.html(), 'hi');
         });
     });
+
+    describe('prepend()', function() {
+        var $root = $dom('#test_elements');
+
+        afterEach(function() {
+            // Clean up inserted elements
+            $root.find('div.prepend_el').remove();
+        });
+
+        it('accepts a $dom object with one element and prepends its element', function() {
+            var $newEls = $dom('<div class="prepend_el">hi</div>');
+            $root.prepend($newEls);
+
+            var $inserted = $root.find('div.prepend_el');
+            assertEqual($inserted.length, 1);
+            assertEqual($inserted.html(), 'hi');
+        });
+
+        it('accepts a $dom object with multiple elements and prepends them', function() {
+            var $newEls = $dom('<div class="prepend_el">one</div> <div class="prepend_el">two</div>');
+            $root.prepend($newEls);
+
+            var $inserted = $root.find('div.prepend_el');
+            assertEqual($inserted.length, 2);
+            assertEqual($inserted.html(), 'one');    // Returns the first element's content
+        });
+
+        it('accepts an html string', function() {
+            $root.prepend('<div class="prepend_el">hi</div>');
+            var $inserted = $root.find('div.prepend_el');
+            assertEqual($inserted.length, 1);
+            assertEqual($inserted.html(), 'hi');
+        });
+    });
 });

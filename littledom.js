@@ -45,6 +45,21 @@
         return els;
     };
 
+    // Accepts an element, string, or $dom object, and returns an array of dom elements
+    function contentToArray(contentToInsert) {
+        var newEls = [];
+        if (!contentToInsert) {
+            newEls = [];
+        } else if (contentToInsert instanceof HTMLElement) {
+            newEls = [contentToInsert];
+        } else if (contentToInsert instanceof $dom) {
+            newEls = contentToInsert.toArray();
+        } else {
+            newEls = createElementsFromHtmlString(contentToInsert);
+        }
+        return newEls;
+    }
+
 
     var $dom = function(query, context) {
         return new $dom.fn.init(query, context);
@@ -404,19 +419,23 @@
         // Append html to the end of all of the matched elements.
         // Accepts a string of html, a DOM node, or a $dom instance.
         append: function(contentToInsert) {
-            var newEls = [];
-            if (!contentToInsert) return;
-
-            if (contentToInsert instanceof HTMLElement) {
-                newEls = [contentToInsert];
-            } else if (contentToInsert instanceof $dom) {
-                newEls = contentToInsert.toArray();
-            } else {
-                newEls = createElementsFromHtmlString(contentToInsert);
-            }
+            var newEls = contentToArray(contentToInsert);
             return this.each(function(selectedEl) {
                 newEls.forEach(function(newEl) {
                     selectedEl.appendChild(newEl);
+                });
+            });
+        },
+
+        // Prepend html at the beginning of all of the matched elements.
+        // Accepts a string of html, a DOM node, or a $dom instance.
+        prepend: function(contentToInsert) {
+            var newEls = contentToArray(contentToInsert);
+            return this.each(function(selectedEl) {
+                // Need to reverse the array so that the new elements will be in
+                // the order that they were passed in (since they're prepended in order):
+                newEls.reverse().forEach(function(newEl) {
+                    selectedEl.insertBefore(newEl, selectedEl.firstChild);
                 });
             });
         },
