@@ -4,9 +4,7 @@ littledom
 =========
 
 littledom is a really tiny (experimental) jQuery work-alike for modern browsers. Think of it
-as a curated jQuery subset, optimized for readability and file size. There's still
-lots of room for more features within its 2kb (minified & gzipped) budget, so feel free to
-fork and add the API support that you want.
+as a curated jQuery subset, optimized for readability and file size.
 
 littledom is *not* a drop-in replacement for jQuery, but it does implement many of its
 most commonly used methods. In many cases, not all method signatures are supported either.
@@ -18,7 +16,8 @@ This keeps the code lean and pretty simple to read. The following parts of jQuer
     * utilities intended for objects and arrays ($.each, $.map, etc)
     * anything else that falls outside out DOM querying and manipulation
 
-Check out the source code, it's extremely small and should be easy to read and understand.
+Check out (the source code)[https://github.com/af/littledom/blob/master/littledom.js],
+it's concise and should be easy to read and understand.
 
 
 Stick with jQuery if:
@@ -39,11 +38,11 @@ Browser API dependencies:
 API
 ---
 
-## Basic API
+## Basic API format
 
     $dom(selectorString, contextElement).<method>(<args>);
 
-## Non-jQuery methods:
+## Non-jQuery methods and attributes:
 
     $dom.ready(callback)    -> equivalent to $(document).ready(callback)
     $dom.browserSupported   -> boolean indicating whether the browser is supported by the library.
