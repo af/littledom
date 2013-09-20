@@ -16,7 +16,7 @@ This keeps the code lean and pretty simple to read. The following parts of jQuer
     * utilities intended for objects and arrays ($.each, $.map, etc)
     * anything else that falls outside out DOM querying and manipulation
 
-Check out (the source code)[https://github.com/af/littledom/blob/master/littledom.js],
+Check out [the source code](https://github.com/af/littledom/blob/master/littledom.js),
 it's concise and should be easy to read and understand.
 
 
