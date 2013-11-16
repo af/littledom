@@ -1,3 +1,5 @@
+var $dom = window.$dom;     // For jshint.
+
 // Helper functions for tests:
 function assertEqual(val1, val2) {
     if (val1 !== val2) throw new Error('' + val1 + ' !== ' + val2);
@@ -5,6 +7,7 @@ function assertEqual(val1, val2) {
 function QSA(query) {
     return document.querySelectorAll(query);
 }
+
 
 describe('$dom', function() {
     var testHtml = document.querySelector('#test_elements').innerHTML;
@@ -117,7 +120,7 @@ describe('$dom', function() {
             assertEqual(result.length, 4);
             result.forEach(function(item, idx) {
                 assertEqual(item, String(idx + 1));
-            })
+            });
         });
 
         it('filter method works', function() {
@@ -185,7 +188,7 @@ describe('$dom', function() {
             $els.remove();
             assertEqual($els.length, 6);
 
-            var $els = $dom('section#test_elements div');
+            $els = $dom('section#test_elements div');
             assertEqual($els.length, 0);
         });
     });
