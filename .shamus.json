@@ -1,0 +1,21 @@
+{
+    "window": {
+        "alwaysOnTop": true,
+        "top": 0,
+        "right": 0
+    },
+    "tasks": [
+        {
+            "name": "mocha tests (via phantom)",
+            "command": "phantomjs test/phantomjs_run_tests.js",
+            "parser": "exitcode",
+            "watchMatcher": "\\.js$"
+        },
+        {
+            "name": "jshint",
+            "command": "jshint littledom.js test/tests.js",
+            "parser": "exitcode",
+            "watchMatcher": "(littledom|tests).js$"
+        }
+    ]
+}
