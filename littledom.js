@@ -63,7 +63,7 @@
 
     var $dom = function(query, context) {
         return new $dom.fn.init(query, context);
-    }
+    };
 
     $dom.fn = $dom.prototype = {
         length: 0,
@@ -256,7 +256,6 @@
         // Note that this method currently only accepts a single class name
         toggleClass: function(className, forceExistence) {
             var useSecondArg = (forceExistence !== undefined);
-            var toggle = !useSecondArg;
             var forceOn = useSecondArg && forceExistence;
             var forceOff = useSecondArg && !forceExistence;
             var regex = new RegExp('\\b' + className + '\\b');
@@ -403,7 +402,7 @@
 
             if (attrName && attrValue) {
                 return this.each(function(el) {
-                    var value = el.dataset[attrName] = attrValue;
+                    el.dataset[attrName] = attrValue;
                 });
             }
 
@@ -451,14 +450,14 @@
 
         // Return the result set as an array:
         toArray: function() { return this.results; }
-    }
+    };
 
     // Register a callback function for when the document is ready to go.
     // Use this where you would use jQuery(document).ready()
     $dom.ready = function(fn) {
         if (document.readyState === 'complete') fn();
         else window.addEventListener('DOMContentLoaded', fn, false);
-    }
+    };
 
     $dom.create = function(htmlString) {
         var results = createElementsFromHtmlString(htmlString.trim(), RegExp.$1);
