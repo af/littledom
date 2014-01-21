@@ -66,6 +66,8 @@ API
     unique()                -> Returns a unique set of the selected elements
     first()                 -> Returns the first selected element (wrapped)
     last()                  -> Returns the last selected element (wrapped)
+    closest(selector)       -> Returns the closest ancestor that matches the given selector
+                               (NOTE! only supports simple tag name selectors for now)
 
     // Classes and attributes:
     addClass(className)
@@ -107,4 +109,4 @@ API
 ## TODO:
     * Add support for:
         .one()
-        .closest(), .children()
+        .children()

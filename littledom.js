@@ -148,6 +148,18 @@
             return newWrapperFromArray(arr);
         },
 
+        // Return the closest ancestor node that matches the passed in selector
+        // Note! this currently only works when you pass in a simple tagname selector
+        closest: function(selector) {
+            if (!this.length) return newWrapperFromArray([]);
+            var testEl = this.results[0].parentElement;
+            while (testEl !== null) {
+                if (testEl.nodeName === selector.toUpperCase()) return newWrapperFromArray([testEl]);
+                testEl = testEl.parentElement;
+            }
+            return newWrapperFromArray([]);
+        },
+
         // Remove each element from the DOM.
         // Note that this doesn't support a query argument like jQuery's remove() does
         remove: function() {

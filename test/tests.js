@@ -11,6 +11,7 @@ function QSA(query) {
 
 describe('$dom', function() {
     var testHtml = document.querySelector('#test_elements').innerHTML;
+    var $root = $dom('#test_elements');
 
     beforeEach(function() {
         document.querySelector('#test_elements').innerHTML = testHtml;
@@ -465,8 +466,6 @@ describe('$dom', function() {
     });
 
     describe('append()', function() {
-        var $root = $dom('#test_elements');
-
         afterEach(function() {
             // Clean up inserted elements
             $root.find('div.append_el').remove();
@@ -518,8 +517,6 @@ describe('$dom', function() {
     });
 
     describe('prepend()', function() {
-        var $root = $dom('#test_elements');
-
         afterEach(function() {
             // Clean up inserted elements
             $root.find('div.prepend_el').remove();
@@ -548,6 +545,21 @@ describe('$dom', function() {
             var $inserted = $root.find('div.prepend_el');
             assertEqual($inserted.length, 1);
             assertEqual($inserted.html(), 'hi');
+        });
+    });
+
+    describe('closest()', function() {
+        it('works when you pass in a tag name', function() {
+            var $el = $root.find('li').first();
+            var $parent = $root.find('ol');
+            assertEqual($el.closest('ol')[0], $parent[0]);
+            assertEqual($el.closest('ol').length, 1);
+
+            assertEqual($el.closest('asdf')[0], undefined);
+        });
+
+        it('returns nothing when called on an empty selection', function() {
+            assertEqual($dom('asdfasdf').closest('div').length, 0);
         });
     });
 });
