@@ -1,6 +1,6 @@
 {
   "name": "littledom",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "Small jQuery-like DOM library",
   "main": "littledom.js",
   "directories": {
