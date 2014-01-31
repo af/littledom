@@ -8,7 +8,9 @@ as a curated jQuery subset, optimized for readability and file size.
 
 littledom is *not* a drop-in replacement for jQuery, but it does implement many of its
 most commonly used methods. In many cases, not all method signatures are supported either.
-This keeps the code lean and pretty simple to read. The following parts of jQuery are intentionally omitted- if you need them you might consider a best-of-breed standalone library instead:
+This keeps the code lean and pretty simple to read. The following parts of jQuery
+are intentionally omitted- if you need them you might consider a best-of-breed
+standalone library instead:
 
     * ajax() and friends
     * promises
@@ -58,8 +60,8 @@ API
     remove()                -> remove all matched elements from the document (doesn't take any arguments)
     data(attrName)          -> return the value of the given data-* attribute (for the first matched element where it's set)
     data(attrName, val)     -> set data-attrName to the given value for all matched elements
-    append(content)         -> Append content ($dom instance, DOM node, or html string) to each element
-    prepend(content)        -> Same as append(), but inserts at the front of the selection
+    append(content, ...)    -> Append content ($dom instances, DOM nodes, or html strings) to each element
+    prepend(content, ...)   -> Same as append(), but inserts at the front of the selection
 
     // Traversal:
     parent()                -> Returns all unique parents of the selected elements
@@ -110,3 +112,4 @@ API
     * Add support for:
         .one()
         .children()
+    * form serialization: to string, and to Object

@@ -486,6 +486,14 @@ describe('$dom', function() {
             assertEqual($inserted.html(), 'one');    // Returns the first element's content
         });
 
+        it('accepts multiple strings with elements', function() {
+            $root.append('<div class="xyz">one</div>', '<div class="xyz">two</div>');
+
+            var $inserted = $root.find('div.xyz');
+            assertEqual($inserted.length, 2);
+            assertEqual($inserted.html(), 'one');    // Returns the first element's content
+        });
+
         it('accepts a $dom object with one element and appends its element', function() {
             var $newEls = $dom('<div class="append_el">hi</div>');
             $root.append($newEls);
@@ -512,6 +520,20 @@ describe('$dom', function() {
 
             var $inserted = $root.find('div.append_el');
             assertEqual($inserted.length, 1);
+            assertEqual($inserted.html(), 'hi');
+        });
+
+        it('accepts multiple DOM nodes and appends them', function() {
+            var div1 = document.createElement('div');
+            div1.className = 'append_el';
+            div1.textContent = 'hi';
+            var div2 = document.createElement('div');
+            div2.className = 'append_el';
+            div2.textContent = 'hi';
+            $root.append(div1, div2);
+
+            var $inserted = $root.find('.append_el');
+            assertEqual($inserted.length, 2);
             assertEqual($inserted.html(), 'hi');
         });
     });
