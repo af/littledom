@@ -2,6 +2,7 @@
     "use strict";
     var document = window.document;
     var arrayProto = Array.prototype;
+    var slice = Array.prototype.slice;
 
     // Used to store callbacks for event delegation (see on() and off()):
     var delegationHandlers = {};
@@ -40,7 +41,7 @@
         if (!(name in containers)) name = '*';
         var container = containers[name];
         container.innerHTML = '' + html;
-        var els = arrayProto.slice.call(container.childNodes);
+        var els = slice.call(container.childNodes);
         els.forEach(function(el){ container.removeChild(el); });
         return els;
     };
@@ -90,7 +91,7 @@
                 this.results = [query];
             } else {
                 var results = this.qsa(query);
-                this.results = arrayProto.slice.call(results);
+                this.results = slice.call(results);
             }
             return makeArrayLike(this, this.results);
         },
@@ -103,7 +104,7 @@
         // Needed for browser dev tools to treat $dom results as arrays.
         // See http://stackoverflow.com/questions/7261670/
         splice: function() {
-            var args = arrayProto.slice.call(arguments);
+            var args = slice.call(arguments);
             return arrayProto.splice.apply(this.results, args);
         },
 
@@ -111,7 +112,7 @@
         find: function(subQuery) {
             var results = [];
             this.each(function(el) {
-                var els = arrayProto.slice.call(el.querySelectorAll(subQuery));
+                var els = slice.call(el.querySelectorAll(subQuery));
                 results = results.concat(els);
             });
 
@@ -335,7 +336,7 @@
                     var candidateEls = [];
                     that.each(function(el) {
                         var query = el.querySelectorAll(delegateTo);
-                        candidateEls = candidateEls.concat(arrayProto.slice.call(query));
+                        candidateEls = candidateEls.concat(slice.call(query));
                     });
 
                     // follow evt.target's parentNode chain looking for elements that match
