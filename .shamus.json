@@ -9,13 +9,13 @@
             "name": "mocha tests (via phantom)",
             "command": "phantomjs test/phantomjs_run_tests.js",
             "parser": "exitcode",
-            "watchMatcher": "\\.js$"
+            "fileMatcher": "\\.js$"
         },
         {
             "name": "jshint",
             "command": "jshint littledom.js test/tests.js",
             "parser": "exitcode",
-            "watchMatcher": "(littledom|tests).js$"
+            "fileMatcher": "(littledom|tests).js$"
         }
     ]
 }
